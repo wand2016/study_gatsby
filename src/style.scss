@@ -237,6 +237,10 @@ a:focus {
   margin-bottom: var(--spacing-8);
 }
 
+figure img {
+  max-width: 100%;
+}
+
 /* Media queries */
 
 @media (max-width: 42rem) {
