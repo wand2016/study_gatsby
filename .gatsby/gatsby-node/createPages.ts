@@ -1,5 +1,6 @@
 import { GatsbyNode } from "gatsby"
 import { isJust } from "../../src/utils/assertions"
+import moment from "moment"
 
 export const createPages: GatsbyNode["createPages"] = async ({
   graphql,
@@ -18,6 +19,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
               slug
             }
             frontmatter {
+              date
               title
               tags
             }
@@ -69,7 +71,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
 
     // Define a template for blog post
     const taggedPosts = require.resolve(`../../src/templates/tagged-posts.tsx`)
-    ;[...new Set(tags)].forEach(tag => {
+    tags.forEach(tag => {
       createPage({
         path: `/tags/${tag}/`,
         component: taggedPosts,
@@ -79,4 +81,74 @@ export const createPages: GatsbyNode["createPages"] = async ({
       })
     })
   })()
+
+  // year, year-month, year-month-day
+
+  await (async () => {
+    const posts = result?.data?.allMarkdownRemark.nodes ?? []
+    const dates = [
+      ...new Set(
+        posts.reduce((dates: Date[], post) => {
+          const date = new Date(post?.frontmatter?.date ?? "")
+          return dates.concat(date)
+        }, [])
+      ),
+    ]
+
+    const dateFilteredPosts = require.resolve(
+      `../../src/templates/date-filtered-posts.tsx`
+    )
+
+    const years = [...new Set(dates.map(date => date.getFullYear()))]
+    for (const year of years) {
+      createYearPage(year, dateFilteredPosts)
+
+      // 1..12
+      const months = [...Array(12).keys()].map((_, i) => i + 1)
+      for (const month of months) {
+        createMonthPage(year, month, dateFilteredPosts)
+      }
+    }
+  })()
+
+  function createYearPage(year: number, dateFilteredPosts: string) {
+    const periodStart = moment().year(year).startOf("year").toISOString()
+    const periodEnd = moment().year(year).endOf("year").toISOString()
+
+    createPage({
+      path: `/${year}/`,
+      component: dateFilteredPosts,
+      context: {
+        periodStart,
+        periodEnd,
+      },
+    })
+  }
+
+  function createMonthPage(
+    year: number,
+    month: number,
+    dateFilteredPosts: string
+  ) {
+    const periodStart = moment()
+      .year(year)
+      .month(month - 1)
+      .startOf("month")
+      .toISOString()
+    const periodEnd = moment()
+      .year(year)
+      .month(month - 1)
+      .endOf("month")
+      .toISOString()
+    const monthInPath = ("0" + month).slice(-2)
+
+    createPage({
+      path: `/${year}/${monthInPath}`,
+      component: dateFilteredPosts,
+      context: {
+        periodStart,
+        periodEnd,
+      },
+    })
+  }
 }
