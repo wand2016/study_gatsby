@@ -12,9 +12,12 @@ const Tags: React.FC<Props> = ({ className, tags }) => {
     return null
   }
 
+  const cpy = [...tags]
+  cpy.sort()
+
   return (
     <ul className={className}>
-      {tags.map(tag => (
+      {cpy.map(tag => (
         <li>
           <Link className="Tag" to={`/tags/${tag}/`}>
             {tag}
