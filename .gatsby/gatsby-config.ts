@@ -2,12 +2,12 @@ import queries from "../src/utils/algolia-queries"
 
 export default {
   siteMetadata: {
-    title: `でぃーほりのチラシの裏`,
+    title: `でぃーほり勉強ブログ`,
     author: {
       name: `D.Horiyama`,
       summary: `シャロちゃんすき`,
     },
-    description: `勉強記録とか`,
+    description: `勉強記録など`,
     siteUrl: `https://wand2016.github.com`,
     social: {
       twitter: `d_horiyama_web`,
