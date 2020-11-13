@@ -12,9 +12,9 @@ const Popover = css`
   margin-top: 0.5em;
   width: 80vw;
   max-width: 30em;
-  box-shadow: 0 0 5px 0;
+  box-shadow: silver 0 0 0.5em;
   padding: 1em;
-  border-radius: var(--spacing-2);
+  border-radius: 1em;
   background: ${({ theme }) => theme.background};
 `
 

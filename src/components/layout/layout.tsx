@@ -11,11 +11,7 @@ type Props = {
 const Layout: React.FC<Props> = ({ className, location, title, children }) => {
   return (
     <div className={className}>
-      <GlobalHeader
-        className="global-header"
-        location={location}
-        title={title}
-      />
+      <GlobalHeader className="global-header" title={title} />
       <main>{children}</main>
       <footer>
         <small>

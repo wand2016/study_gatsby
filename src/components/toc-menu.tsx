@@ -24,38 +24,35 @@ const TocMenu: React.FC<Props> = ({ className, toc }) => {
   })
 
   return (
-    <div className={className}>
+    <footer className={className}>
       <div
         className={grayoutClassNames}
         onClick={() => {
           setTocVisibility(false)
         }}
       />
-      <div className={tocClassNames}>
-        <header>目次</header>
-        <section>{<div dangerouslySetInnerHTML={{ __html: toc }} />}</section>
+      <div className="wrapper">
+        <section className={tocClassNames}>
+          <header>目次</header>
+          <p dangerouslySetInnerHTML={{ __html: toc }} />
+        </section>
+        <nav>
+          <button
+            type="button"
+            className={tocButtonClassNames}
+            onClick={() => {
+              setTocVisibility(!tocVisible)
+            }}
+          >
+            {tocVisible ? "▼" : "▲"}目次
+          </button>
+        </nav>
       </div>
-      <nav>
-        <button
-          type="button"
-          className={tocButtonClassNames}
-          onClick={() => {
-            setTocVisibility(!tocVisible)
-          }}
-        >
-          {tocVisible ? "▼" : "▲"}目次
-        </button>
-      </nav>
-    </div>
+    </footer>
   )
 }
 
 export default styled(TocMenu)`
-  width: 100vw;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-
   .gray-out {
     background-color: rgba(0, 0, 0, 0.5);
     width: 100vw;
@@ -65,7 +62,6 @@ export default styled(TocMenu)`
     right: 0;
     top: 0;
     bottom: 0;
-    z-index: -1;
     transition: opacity 0.2s;
     opacity: 0;
     pointer-events: none;
@@ -75,46 +71,57 @@ export default styled(TocMenu)`
     pointer-events: auto;
   }
 
-  .toc {
-    padding: 1em;
-    margin-left: auto;
-    margin-right: auto;
-    max-height: 80vh;
-    overflow-x: hidden;
-    overflow-y: auto;
-    display: inline-height;
-    background-color: white;
-    border-radius: 1em;
-    transition: opacity 0.2s;
-    opacity: 0;
-    pointer-events: none;
-    position: fixed;
-    bottom: 1em;
-    left: 1em;
-    right: 1em;
-  }
-  .toc.toc-visible {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  nav {
+  .wrapper {
+    width: 100vw;
+    max-width: var(--maxWidth-wrapper);
     position: fixed;
     bottom: 0;
-    pointer-events: none;
+    left: 50vw;
+    transform: translate(-50%);
 
-    .toc-button {
-      box-shadow: silver 0 0 1em;
-      border: none;
-      background-color: silver;
-      line-height: 1;
-      height: 2em;
-      padding: 0.5em;
+    .toc {
+      padding: 1em;
+      margin-left: auto;
+      margin-right: auto;
+      max-height: 80vh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      display: inline-height;
+      background-color: white;
       border-radius: 1em;
+      transition: opacity 0.2s;
+      opacity: 0;
+      pointer-events: none;
       position: fixed;
-      left: 1em;
       bottom: 1em;
+      left: 1em;
+      right: 1em;
+    }
+    .toc.toc-visible {
+      opacity: 1;
       pointer-events: auto;
+    }
+
+    nav {
+      bottom: 0;
+      pointer-events: none;
+
+      .toc-button {
+        cursor: pointer;
+        box-shadow: silver 0 0 1em;
+        border: none;
+        background-color: silver;
+        line-height: 1;
+        height: 2em;
+        padding: 0.5em;
+        border-radius: 1em;
+        white-space: nowrap;
+        position: absolute;
+        display: inline-block;
+        left: 1em;
+        bottom: 1em;
+        pointer-events: auto;
+      }
     }
   }
 `

@@ -2,6 +2,7 @@ import React from "react"
 import { Link } from "gatsby"
 import "@/style.scss"
 import Search, { Index } from "@/components/search"
+import styled from "styled-components"
 
 const searchIndices: Index[] = [
   {
@@ -12,25 +13,46 @@ const searchIndices: Index[] = [
 
 type Props = {
   className?: string
-  location: Location
   title: string
 }
 
-const GlobalHeader: React.FC<Props> = ({ className, location, title }) => {
-  const tagsPath = `${__PATH_PREFIX__}/tags`
-  const isTagsPath = location.pathname === tagsPath
-
+const GlobalHeader: React.FC<Props> = ({ className, title }) => {
   return (
     <header className={className}>
       <h1 className="main-heading">
         <Link to="/">{title}</Link>
       </h1>
 
-      <Search indices={searchIndices} />
-      <br />
-      {!isTagsPath ? <Link to="/tags">タグ一覧</Link> : null}
+      <nav className="top-menu">
+        <ul>
+          <li>
+            <Link to="/">最新記事</Link>
+          </li>
+          <li>年月別記事</li>
+          <li>
+            <Link to="/tags">タグ別記事</Link>
+          </li>
+          <li>
+            <Search indices={searchIndices} />
+          </li>
+        </ul>
+      </nav>
     </header>
   )
 }
 
-export default GlobalHeader
+export default styled(GlobalHeader)`
+  .main-heading {
+    text-align: center;
+  }
+  .top-menu > ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    width: 100%;
+
+    > li {
+      flex-grow: 1;
+    }
+  }
+`

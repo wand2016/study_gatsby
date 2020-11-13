@@ -1,20 +1,13 @@
 import styled, { css } from "styled-components"
 import SearchBox from "./search-box"
 
-const open = css`
-  width: 10em;
-  background: ${({ theme }) => theme.background};
-  cursor: text;
-  margin-left: -1.6em;
-  padding-left: 1.6em;
+const searchInputFocus = css`
+  border: none;
+  box-shadow: silver 0 0 0.5em;
 `
 
-const closed = css`
-  width: 0;
-  background: transparent;
-  cursor: pointer;
-  margin-left: -1em;
-  padding-left: 1em;
+const searchInputNoFocus = css`
+  border: 1px solid silver;
 `
 
 export default styled(SearchBox)`
@@ -25,15 +18,20 @@ export default styled(SearchBox)`
 
   .SearchInput {
     outline: none;
-    border: ${({ hasFocus }) => (hasFocus ? "auto" : "none")};
     font-size: 1em;
-    transition: 100ms;
     border-radius: 2px;
     color: ${({ theme }) => theme.foreground};
     ::placeholder {
       color: ${({ theme }) => theme.faded};
     }
-    ${({ hasFocus }) => (hasFocus ? open : closed)}
+    width: 10em;
+    background: ${({ theme }) => theme.background};
+    cursor: text;
+    margin-left: -2em;
+    padding-left: 2em;
+    border-radius: 1em;
+    height: 2em;
+    ${({ hasFocus }) => (hasFocus ? searchInputFocus : searchInputNoFocus)};
   }
 
   .SearchIcon {
