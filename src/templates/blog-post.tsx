@@ -1,10 +1,11 @@
 import React from "react"
-import { graphql } from "gatsby"
+import { graphql, Link } from "gatsby"
 import Layout from "@/components/layout"
 import SEO from "@/components/seo"
 import PostNav from "@/components/post-nav"
 import Post from "@/components/post"
 import Share from "@/components/share"
+import moment from "moment"
 
 type Props = {
   data: GatsbyTypes.BlogPostBySlugQuery
@@ -15,6 +16,13 @@ type Props = {
 const BlogPostTemplate: React.FC<Props> = ({ data, pageContext, location }) => {
   const post = data?.markdownRemark
   const siteTitle = data?.site?.siteMetadata?.title || `Title`
+  const date = post?.frontmatter?.date
+  const dateLocal = date ? moment(date).local() : undefined
+
+  const year = dateLocal?.format("YYYY") ?? ""
+  const month = dateLocal?.format("MM") ?? ""
+  const day = dateLocal?.format("DD") ?? ""
+  const time = dateLocal?.format("HH:mm:SS") ?? ""
 
   return (
     <Layout location={location} title={siteTitle}>
@@ -22,6 +30,12 @@ const BlogPostTemplate: React.FC<Props> = ({ data, pageContext, location }) => {
         title={post?.frontmatter?.title ?? "no title"}
         description={post?.excerpt ?? "no description"}
       />
+      <p>
+        <Link to={`/${year}/`}>{year}</Link>/
+        <Link to={`/${year}/${month}/`}>{month}</Link>/{day}
+        &nbsp;{time}
+      </p>
+
       <Post post={post} />
       <hr />
       <Share post={post} location={location} />

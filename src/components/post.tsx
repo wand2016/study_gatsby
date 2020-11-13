@@ -13,8 +13,6 @@ type Props = {
 
 const Post: React.FC<Props> = ({ className, post }) => {
   const tags = (post?.frontmatter?.tags ?? []).filter(isJust)
-  const date = post?.frontmatter?.date
-  const dateLocal = date ? moment(date).local() : undefined
 
   return (
     <article
@@ -24,7 +22,6 @@ const Post: React.FC<Props> = ({ className, post }) => {
     >
       <header>
         <h1 itemProp="headline">{post?.frontmatter?.title}</h1>
-        <p>{dateLocal?.format("YYYY-MM-DD HH:mm:ss")}</p>
       </header>
       <Tags tags={tags} />
       {post?.tableOfContents && <Toc contents={post?.tableOfContents} />}
