@@ -33,6 +33,7 @@ export default styled(Tags)`
   line-height: 1;
   display: flex;
   list-style: none;
+  padding-left: 0;
 
   li {
     font-size: inherit;

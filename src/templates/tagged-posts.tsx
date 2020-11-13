@@ -1,7 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
 import Posts from "@/components/posts"
-import Bio from "@/components/bio"
 import Layout from "@/components/layout"
 import SEO from "@/components/seo"
 
@@ -19,7 +18,6 @@ const TaggedPostsIndex: React.FC<Props> = ({ data, pageContext, location }) => {
   return (
     <Layout location={location} title={siteTitle}>
       <SEO title={seoTitle} />
-      <Bio />
       {`Searched by tag "${tag}"`}
       <Posts posts={posts} />
     </Layout>

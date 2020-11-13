@@ -29,7 +29,6 @@ const DateFilteredPostsIndex: React.FC<Props> = ({
   return (
     <Layout location={location} title={siteTitle}>
       <SEO title={seoTitle} />
-      <Bio />
       {seoTitle}
       <Posts posts={posts} />
     </Layout>

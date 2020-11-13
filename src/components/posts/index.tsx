@@ -23,6 +23,7 @@ const Posts: React.FC<Props> = ({ className, posts }) => {
 
 export default styled(Posts)`
   list-style: none;
+  padding-left: 0;
 
   > li:not(:first-child) {
     border-top: 1px solid silver;

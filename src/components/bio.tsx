@@ -12,6 +12,7 @@ const Bio: React.FC<Props> = ({ className }) => {
 
   const author = data?.site?.siteMetadata?.author
   const social = data?.site?.siteMetadata?.social
+  const github = data?.site?.siteMetadata?.siteUrls?.github
   const avatar = data?.avatar?.childImageSharp?.fixed
 
   return (
@@ -28,22 +29,31 @@ const Bio: React.FC<Props> = ({ className }) => {
       )}
       {author?.name && (
         <p className="bio-description">
-          <strong>{author.name}</strong>
+          {author.name}
           <br />
-          {author?.summary ?? ""}&nbsp;
-          <a href={`https://twitter.com/${social?.twitter ?? ""}`}>twitter</a>
+          {author?.summary ?? ""}
         </p>
       )}
+      <p className="bio-links">
+        <ul>
+          <li>
+            <a href={`https://twitter.com/${social?.twitter ?? ""}`}>twitter</a>
+          </li>
+          <li>
+            <a href={github}>GitHub</a>
+          </li>
+        </ul>
+      </p>
     </div>
   )
 }
 
 export default styled(Bio)`
   display: flex;
-  margin-bottom: var(--spacing-16);
 
-  .bio-description {
-    margin-bottom: var(--spacing-0);
+  p {
+    margin: 0;
+    text-align: left;
   }
 
   .bio-avatar {
@@ -51,6 +61,13 @@ export default styled(Bio)`
     margin-bottom: var(--spacing-0);
     min-width: 50px;
     border-radius: 100%;
+  }
+
+  .bio-links {
+    padding-left: 2em;
+    ul {
+      margin: 0;
+    }
   }
 `
 
@@ -71,6 +88,9 @@ export const pageQuery = graphql`
         }
         social {
           twitter
+        }
+        siteUrls {
+          github
         }
       }
     }
