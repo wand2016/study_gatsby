@@ -2,7 +2,7 @@ import React from "react"
 import { graphql, Link } from "gatsby"
 import Layout from "@/components/layout"
 import SEO from "@/components/seo"
-import PostNav from "@/components/post-nav"
+import TocMenu from "@/components/toc-menu"
 import Post from "@/components/post"
 import Share from "@/components/share"
 import moment from "moment"
@@ -39,7 +39,7 @@ const BlogPostTemplate: React.FC<Props> = ({ data, pageContext, location }) => {
       <Post post={post} />
       <hr />
       <Share post={post} location={location} />
-      <PostNav previous={pageContext.previous} next={pageContext.next} />
+      {post?.tableOfContents && <TocMenu toc={post?.tableOfContents} />}
     </Layout>
   )
 }

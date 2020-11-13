@@ -1,9 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import Tags from "@/components/tags"
-import Toc from "@/components/toc"
 import { isJust } from "@/utils/assertions"
-import moment from "moment"
 
 type Post = GatsbyTypes.BlogPostBySlugQuery["markdownRemark"]
 type Props = {
@@ -24,7 +22,6 @@ const Post: React.FC<Props> = ({ className, post }) => {
         <h1 itemProp="headline">{post?.frontmatter?.title}</h1>
       </header>
       <Tags tags={tags} />
-      {post?.tableOfContents && <Toc contents={post?.tableOfContents} />}
       {post?.frontmatter?.bibliography && (
         <section>
           出典:&nbsp;
@@ -33,6 +30,7 @@ const Post: React.FC<Props> = ({ className, post }) => {
           </a>
         </section>
       )}
+      <hr />
       <section
         dangerouslySetInnerHTML={{
           __html: post?.html ?? "no content",
