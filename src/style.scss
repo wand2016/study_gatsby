@@ -182,6 +182,7 @@ ol li {
 
 li > p {
   margin-bottom: calc(var(--spacing-2) / 2);
+  display: inline;
 }
 
 blockquote {
