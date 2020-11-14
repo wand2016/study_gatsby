@@ -73,7 +73,7 @@ export default styled(Bio)`
 
 export const pageQuery = graphql`
   query Bio {
-    avatar: file(absolutePath: { regex: "/profile-pic.jpg/" }) {
+    avatar: file(absolutePath: { regex: "/profile-pic.png/" }) {
       childImageSharp {
         fixed(width: 50, height: 50, quality: 95) {
           ...GatsbyImageSharpFixed
