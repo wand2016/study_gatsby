@@ -194,6 +194,8 @@ blockquote {
   font-size: var(--fontSize-2);
   font-style: italic;
   margin-bottom: var(--spacing-8);
+  overflow-y: auto;
+  white-space: nowrap;
 }
 
 blockquote > :last-child {
