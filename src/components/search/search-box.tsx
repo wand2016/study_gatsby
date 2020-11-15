@@ -19,7 +19,7 @@ const form: React.FC<Props> = ({
     <input
       className="SearchInput"
       type="text"
-      placeholder="検索"
+      placeholder="キーワード"
       aria-label="Search"
       onChange={e => refine(e.target.value)}
       value={currentRefinement}
