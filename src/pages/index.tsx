@@ -12,7 +12,7 @@ type Props = {
 const PostsIndex: React.FC<Props> = ({ data, pageContext, location }) => {
   const siteTitle = data?.site?.siteMetadata?.title ?? `no siteTitle`
   const posts = data?.allMarkdownRemark?.nodes
-  const seoTitle = `all posts`
+  const seoTitle = `最新記事`
 
   return (
     <Layout location={location} title={siteTitle}>
@@ -31,7 +31,10 @@ export const pageQuery = graphql`
         title
       }
     }
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+    allMarkdownRemark(
+      limit: 10
+      sort: { fields: [frontmatter___date], order: DESC }
+    ) {
       nodes {
         fields {
           slug
