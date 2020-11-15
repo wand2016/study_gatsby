@@ -42,6 +42,9 @@ const Bio: React.FC<Props> = ({ className }) => {
           <li>
             <a href={github}>GitHub</a>
           </li>
+          <li>
+            <a href="#">保有資格(準備中)</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -50,6 +53,7 @@ const Bio: React.FC<Props> = ({ className }) => {
 
 export default styled(Bio)`
   display: flex;
+  align-items: center;
 
   div {
     margin: 0;
