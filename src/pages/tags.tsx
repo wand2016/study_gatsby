@@ -27,8 +27,8 @@ const NotFoundPage: React.FC<Props> = ({ data, location }) => {
       <SEO title="タグ別記事" />
       <h1>タグ一覧</h1>
       <ul>
-        {tags.map(tag => (
-          <li>
+        {tags.map((tag, i) => (
+          <li key={i}>
             <Link to={`/tags/${tag}`}>
               {tag} ({tagCounts[tag]})
             </Link>

@@ -14,8 +14,8 @@ const Posts: React.FC<Props> = ({ className, posts }) => {
 
   return (
     <ol className={className}>
-      {posts.map(post => (
-        <PostListItem post={post} />
+      {posts.map((post, i) => (
+        <PostListItem key={i} post={post} />
       ))}
     </ol>
   )

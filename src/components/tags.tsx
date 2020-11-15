@@ -17,8 +17,8 @@ const Tags: React.FC<Props> = ({ className, tags }) => {
 
   return (
     <ul className={className}>
-      {cpy.map(tag => (
-        <li>
+      {cpy.map((tag, i) => (
+        <li key={i}>
           <Link className="Tag" to={`/tags/${tag}/`}>
             {tag}
           </Link>
