@@ -6,7 +6,6 @@ type Props = {
   className?: string
   location: Location
   title: string
-  children: React.ReactNodeArray
 }
 const Layout: React.FC<Props> = ({ className, location, title, children }) => {
   return (
