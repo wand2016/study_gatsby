@@ -58,7 +58,7 @@ const BlogPostTemplate: React.FC<Props> = ({
       <PostFooterMenu>
         {post?.tableOfContents ? (
           <>
-            <TocMenu show={tocVisibility} post={post} />
+            <TocMenu show={tocVisibility} content={post?.tableOfContents} />
             <button
               type="button"
               className="toc-button"

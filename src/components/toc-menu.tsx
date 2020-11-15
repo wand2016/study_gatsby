@@ -1,19 +1,18 @@
 import React from "react"
 import styled from "styled-components"
 
-type Post = GatsbyTypes.BlogPostBySlugQuery["markdownRemark"]
 type Props = {
   className?: string
-  post: Post
+  content: string
   show?: boolean
 }
 
-const TocMenu: React.FC<Props> = ({ className, post, show = false }) => {
+const TocMenu: React.FC<Props> = ({ className, content, show = false }) => {
   return (
     <header className={className}>
-      <section className="toc">
+      <section className="toc" key={Date()}>
         <header>目次</header>
-        <p dangerouslySetInnerHTML={{ __html: post?.tableOfContents ?? "" }} />
+        <p dangerouslySetInnerHTML={{ __html: content }} />
       </section>
     </header>
   )
