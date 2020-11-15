@@ -38,6 +38,7 @@
     "react-dom": "^16.14.0",
     "react-helmet": "^5.2.1",
     "react-share": "^4.3.1",
+    "react-tooltip": "^4.2.10",
     "typeface-merriweather": "0.0.72",
     "typeface-montserrat": "0.0.75"
   },
@@ -45,6 +46,7 @@
     "@babel/plugin-proposal-decorators": "^7.12.1",
     "@types/classnames": "^2.2.11",
     "@types/node": "^12.12.68",
+    "@types/react-calendar-heatmap": "^1.6.2",
     "@types/react-helmet": "^6.1.0",
     "@types/react-instantsearch-dom": "^6.3.0",
     "@types/styled-components": "^5.1.4",
@@ -53,6 +55,7 @@
     "gatsby-remark-external-links": "0.0.4",
     "node-sass": "^4.14.1",
     "prettier": "2.1.2",
+    "react-calendar-heatmap": "^1.8.1",
     "react-instantsearch-dom": "^6.8.1",
     "styled-components": "^5.2.0",
     "typescript": "^4.0.3"

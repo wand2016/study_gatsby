@@ -32,7 +32,9 @@ const GlobalHeader: React.FC<Props> = ({ className, title }) => {
           <li>
             <Link to="/">最新記事</Link>
           </li>
-          <li>年月別記事</li>
+          <li>
+            <Link to="/time">年月日別記事</Link>
+          </li>
           <li>
             <Link to="/tags">タグ別記事</Link>
           </li>
