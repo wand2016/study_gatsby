@@ -31,9 +31,9 @@ const BlogPostTemplate: React.FC<Props> = ({ data, pageContext, location }) => {
         description={post?.excerpt ?? "no description"}
       />
       <p>
-        <Link to={`/${year}/`}>{year}</Link>/
-        <Link to={`/${year}/${month}/`}>{month}</Link>/{day}
-        &nbsp;{time}
+        <Link to={`/time/${year}/`}>{year}</Link>/
+        <Link to={`/time/${year}/${month}/`}>{month}</Link>/
+        <Link to={`/time/${year}/${month}/${day}`}>{day}</Link> &nbsp;{time}
       </p>
 
       <Post post={post} />
