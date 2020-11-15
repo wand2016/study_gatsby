@@ -7,6 +7,7 @@ import "react-calendar-heatmap/dist/styles.css"
 import moment from "moment"
 import styled from "styled-components"
 import ReactTooltip from "react-tooltip"
+import { isJust } from "@/utils/assertions"
 
 type CalenderHeatmapDatum = {
   date: string
@@ -23,7 +24,7 @@ type Props = {
 const PostsIndex: React.FC<Props> = ({ className, data, location }) => {
   const siteTitle = data?.site?.siteMetadata?.title ?? `no siteTitle`
   const posts = data?.allMarkdownRemark?.nodes
-  const seoTitle = `年月日別記事`
+  const seoTitle = `カレンダー`
 
   const calenderHeatmapDictionary: Record<string, number> = {}
   const postTitlesDictionary: Record<string, string[]> = {}
@@ -42,26 +43,35 @@ const PostsIndex: React.FC<Props> = ({ className, data, location }) => {
   Object.entries(postTitlesDictionary).forEach(([date, titles]) => {
     tipDictionary[date] = [date, ...titles].join("<br />")
   })
+  const dates = [
+    ...new Set(posts.map(post => post?.frontmatter?.date).filter(isJust)),
+  ].sort()
+  const startDate = new Date(dates[0])
 
   return (
     <Layout className={className} location={location} title={siteTitle}>
       <SEO title={seoTitle} />
       SP用のUIは検討中...
-      <CalendarHeatmap
-        values={calenderHeatmapData}
-        classForValue={value =>
-          value ? `color-scale-${value.count}` : "color-empty"
-        }
-        onClick={async (e: CalenderHeatmapDatum | null) => {
-          if (!e) {
-            return
-          }
-          await navigate(`/time/${moment(e.date).format("YYYY/MM/DD")}`)
-        }}
-        tooltipDataAttrs={(e: CalenderHeatmapDatum) => ({
-          "data-tip": tipDictionary[e.date] ?? "",
-        })}
-      />
+      <div className="outer">
+        <div className="inner">
+          <CalendarHeatmap
+            startDate={startDate}
+            values={calenderHeatmapData}
+            classForValue={value =>
+              value ? `color-scale-${value.count}` : "color-empty"
+            }
+            onClick={async (e: CalenderHeatmapDatum | null) => {
+              if (!e) {
+                return
+              }
+              await navigate(`/time/${moment(e.date).format("YYYY/MM/DD")}`)
+            }}
+            tooltipDataAttrs={(e: CalenderHeatmapDatum) => ({
+              "data-tip": tipDictionary[e.date] ?? "",
+            })}
+          />
+        </div>
+      </div>
       <ReactTooltip multiline={true} />
     </Layout>
   )
@@ -80,10 +90,23 @@ export default styled(PostsIndex)`
   .react-calendar-heatmap .color-scale-4 {
     fill: #1e6823;
   }
+
+  .outer {
+    height: 160px;
+    overflow-x: auto;
+
+    .inner {
+      height: 100%;
+      overflow: none;
+      > * {
+        height: 100%;
+      }
+    }
+  }
 `
 
 export const pageQuery = graphql`
-  query TimePage {
+  query CalendarPage {
     site {
       siteMetadata {
         title
