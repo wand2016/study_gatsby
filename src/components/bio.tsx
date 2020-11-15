@@ -28,13 +28,13 @@ const Bio: React.FC<Props> = ({ className }) => {
         />
       )}
       {author?.name && (
-        <p className="bio-description">
+        <div className="bio-description">
           {author.name}
           <br />
           {author?.summary ?? ""}
-        </p>
+        </div>
       )}
-      <p className="bio-links">
+      <div className="bio-links">
         <ul>
           <li>
             <a href={`https://twitter.com/${social?.twitter ?? ""}`}>twitter</a>
@@ -43,7 +43,7 @@ const Bio: React.FC<Props> = ({ className }) => {
             <a href={github}>GitHub</a>
           </li>
         </ul>
-      </p>
+      </div>
     </div>
   )
 }
@@ -51,7 +51,7 @@ const Bio: React.FC<Props> = ({ className }) => {
 export default styled(Bio)`
   display: flex;
 
-  p {
+  div {
     margin: 0;
     text-align: left;
   }
