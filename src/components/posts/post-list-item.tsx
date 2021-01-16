@@ -19,17 +19,19 @@ const PostListItem: React.FC<Props> = ({ className, post }) => {
   const tags = post?.frontmatter?.tags
 
   return (
-    <Link to={slug ?? "/"} style={{ textDecoration: "none" }}>
-      <Card
-        key={slug}
-        title={title ?? "untitled"}
-        subTitle={dateLocal?.format("YYYY-MM-DD HH:mm:ss")}
-        style={{ marginBottom: "1em" }}
-      >
-        <section>{tags && <Tags tags={tags.filter(isJust)} />}</section>
-      </Card>
-    </Link>
+    <div className={className}>
+      <Link to={slug ?? "/"} style={{ textDecoration: "none" }}>
+        <Card
+          key={slug}
+          title={title ?? "untitled"}
+          subTitle={dateLocal?.format("YYYY-MM-DD HH:mm:ss")}
+          style={{ marginBottom: "1em" }}
+        >
+          <section>{tags && <Tags tags={tags.filter(isJust)} />}</section>
+        </Card>
+      </Link>
+    </div>
   )
 }
 
-export default styled(PostListItem)``
+export default PostListItem

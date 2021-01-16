@@ -13,11 +13,11 @@ const Posts: React.FC<Props> = ({ className, posts }) => {
   }
 
   return (
-    <>
+    <div className="p-grid">
       {posts.map((post, i) => (
-        <PostListItem key={i} post={post} />
+        <PostListItem key={i} post={post} className="p-col-12 p-md-12 p-lg-6" />
       ))}
-    </>
+    </div>
   )
 }
 
