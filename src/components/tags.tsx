@@ -1,6 +1,7 @@
 import React from "react"
 import { Link } from "gatsby"
 import styled from "styled-components"
+import { Tag } from "primereact/tag"
 
 type Props = {
   className?: string
@@ -16,44 +17,16 @@ const Tags: React.FC<Props> = ({ className, tags }) => {
   cpy.sort()
 
   return (
-    <ul className={className}>
+    <div className={className}>
       {cpy.map((tag, i) => (
-        <li key={i}>
-          <Link className="Tag" to={`/tags/${tag}/`}>
+        <Link to={`/tags/${tag}/`} style={{ textDecoration: "none" }}>
+          <Tag key={i} rounded={true} style={{ marginRight: "0.5em" }}>
             {tag}
-          </Link>
-        </li>
+          </Tag>
+        </Link>
       ))}
-    </ul>
+    </div>
   )
 }
 
-export default styled(Tags)`
-  font-size: 1rem;
-  line-height: 1;
-  display: flex;
-  list-style: none;
-  padding-left: 0;
-
-  li {
-    font-size: inherit;
-    line-height: inherit;
-    border: 1px solid grey;
-    border-radius: 0.75rem;
-    padding: 0.25rem 0.25rem;
-    transition: background-color 0.2s;
-
-    &:not(:first-child) {
-      margin-left: 0.5rem;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    &:hover {
-      background-color: #eee;
-    }
-  }
-`
+export default styled(Tags)``
