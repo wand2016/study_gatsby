@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { graphql, Link } from "gatsby"
+import { graphql, Link, navigate } from "gatsby"
 import Layout from "@/components/layout"
 import SEO from "@/components/seo"
 import Background from "@/components/background"
@@ -9,6 +9,8 @@ import Post from "@/components/post"
 import Share from "@/components/share"
 import moment from "moment"
 import styled from "styled-components"
+import { BreadCrumb } from "primereact/breadcrumb"
+import { MenuItem } from "primereact/api"
 
 type Props = {
   className?: string
@@ -33,6 +35,37 @@ const BlogPostTemplate: React.FC<Props> = ({
   const day = dateLocal?.format("DD") ?? ""
   const time = dateLocal?.format("HH:mm:SS") ?? ""
 
+  const breadcrumbItems: MenuItem[] = [
+    {
+      label: year,
+      command(e: { originalEvent: Event; item: MenuItem }) {
+        navigate(`/time/${year}/`)
+      },
+    },
+    {
+      label: month,
+      command(e: { originalEvent: Event; item: MenuItem }) {
+        navigate(`/time/${year}/${month}/`)
+      },
+    },
+    {
+      label: day,
+      command(e: { originalEvent: Event; item: MenuItem }) {
+        navigate(`/time/${year}/${month}/${day}/`)
+      },
+    },
+    {
+      label: time,
+    },
+  ]
+
+  const home: MenuItem = {
+    icon: "pi pi-calendar",
+    async command(e: { originalEvent: Event; item: MenuItem }) {
+      await navigate("/calendar")
+    },
+  }
+
   const [tocVisibility, setTocVisibility] = useState(false)
 
   return (
@@ -41,11 +74,7 @@ const BlogPostTemplate: React.FC<Props> = ({
         title={post?.frontmatter?.title ?? "no title"}
         description={post?.excerpt ?? "no description"}
       />
-      <p>
-        <Link to={`/time/${year}/`}>{year}</Link>/
-        <Link to={`/time/${year}/${month}/`}>{month}</Link>/
-        <Link to={`/time/${year}/${month}/${day}`}>{day}</Link> &nbsp;{time}
-      </p>
+      <BreadCrumb model={breadcrumbItems} home={home} />
 
       <Post post={post} />
       <hr />
