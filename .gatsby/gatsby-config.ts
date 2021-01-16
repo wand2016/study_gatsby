@@ -2,7 +2,7 @@ import queries from "../src/utils/algolia-queries"
 
 export default {
   siteMetadata: {
-    title: `勉強ブログ`,
+    title: `D.Horiyama's output`,
     author: {
       name: `D.Horiyama`,
       summary: `シャロちゃんすき`,
