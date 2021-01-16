@@ -7,6 +7,7 @@ import SEO from "@/components/seo"
 import "primereact/resources/themes/saga-blue/theme.css"
 import "primereact/resources/primereact.min.css"
 import "primeicons/primeicons.css"
+import "github-markdown-css/github-markdown.css"
 
 type Props = {
   data: GatsbyTypes.PageQuery

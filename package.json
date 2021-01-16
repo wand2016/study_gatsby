@@ -33,6 +33,7 @@
     "gatsby-source-filesystem": "^2.9.0",
     "gatsby-transformer-remark": "^2.14.0",
     "gatsby-transformer-sharp": "^2.10.1",
+    "github-markdown-css": "^4.0.0",
     "primeicons": "^4.1.0",
     "primereact": "^6.0.0",
     "prismjs": "^1.23.0",

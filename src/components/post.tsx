@@ -1,5 +1,4 @@
 import React from "react"
-import styled from "styled-components"
 import Tags from "@/components/tags"
 import { isJust } from "@/utils/assertions"
 
@@ -14,7 +13,7 @@ const Post: React.FC<Props> = ({ className, post }) => {
 
   return (
     <article
-      className={className}
+      className="markdown-body"
       itemScope
       itemType="http://schema.org/Article"
     >
@@ -41,18 +40,4 @@ const Post: React.FC<Props> = ({ className, post }) => {
   )
 }
 
-export default styled(Post)`
-  header h1 {
-    margin: var(--spacing-0) var(--spacing-0) var(--spacing-4) var(--spacing-0);
-  }
-
-  header p {
-    font-size: var(--fontSize-2);
-    font-family: var(--font-heading);
-  }
-
-  section > ol,
-  section > ul {
-    padding-left: 2rem;
-  }
-`
+export default Post
