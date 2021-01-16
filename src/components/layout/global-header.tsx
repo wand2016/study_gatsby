@@ -21,6 +21,7 @@ type Props = {
 type PathAndLabel = {
   path: string
   label: string
+  icon?: string
 }
 
 const GlobalHeader: React.FC<Props> = ({ className, title }) => {
@@ -28,14 +29,17 @@ const GlobalHeader: React.FC<Props> = ({ className, title }) => {
     {
       path: "/",
       label: "最新記事",
+      icon: "pi pi-fw pi-home",
     },
     {
       path: "/calendar",
-      label: "カレンダー",
+      label: "日付別記事",
+      icon: "pi pi-fw pi-calendar-times",
     },
     {
       path: "/tags",
       label: "タグ別記事",
+      icon: "pi pi-fw pi-tags",
     },
   ]
 
@@ -46,6 +50,7 @@ const GlobalHeader: React.FC<Props> = ({ className, title }) => {
         command(e: { originalEvent: Event; item: MenuItem }) {
           navigate(pathAndLabel.path)
         },
+        icon: pathAndLabel.icon,
       }
     }
   )
