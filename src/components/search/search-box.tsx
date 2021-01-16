@@ -1,7 +1,7 @@
 import React, { FocusEventHandler } from "react"
 import { connectSearchBox } from "react-instantsearch-dom"
-import { Search as SearchIcon } from "@styled-icons/fa-solid"
 import { SearchBoxProvided } from "react-instantsearch-core"
+import { InputText } from "primereact/inputtext"
 
 type Props = {
   className?: string
@@ -16,16 +16,16 @@ const form: React.FC<Props> = ({
   onFocus,
 }) => (
   <form className={className}>
-    <input
-      className="SearchInput"
-      type="text"
-      placeholder="キーワード"
-      aria-label="Search"
-      onChange={e => refine(e.target.value)}
-      value={currentRefinement}
-      onFocus={onFocus}
-    />
-    <SearchIcon className="SearchIcon" />
+    <span className="p-input-icon-left">
+      <i className="pi pi-search" />
+      <InputText
+        value={currentRefinement}
+        onChange={e => refine((e.target as HTMLInputElement).value)}
+        placeholder="キーワード"
+        aria-label="Search"
+        onFocus={onFocus}
+      />
+    </span>
   </form>
 )
 
