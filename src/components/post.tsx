@@ -11,6 +11,10 @@ type Props = {
 const Post: React.FC<Props> = ({ className, post }) => {
   const tags = (post?.frontmatter?.tags ?? []).filter(isJust)
 
+  const bibliographies = post?.frontmatter?.bibliography
+    ? [post?.frontmatter?.bibliography]
+    : post?.frontmatter?.bibliographies ?? []
+
   return (
     <article
       className="markdown-body"
@@ -21,14 +25,20 @@ const Post: React.FC<Props> = ({ className, post }) => {
         <h1 itemProp="headline">{post?.frontmatter?.title}</h1>
       </header>
       <Tags tags={tags} />
-      {post?.frontmatter?.bibliography && (
+      {bibliographies.length ? (
         <section>
-          出典:&nbsp;
-          <a href={post?.frontmatter?.bibliography} target="_blank">
-            {post?.frontmatter?.bibliography}
-          </a>
+          <h2>出典:&nbsp;</h2>
+          <ul>
+            {bibliographies.map((bibliography, i) => (
+              <li key={`bibliography-${i}`}>
+                <a href={bibliography} target="_blank">
+                  {bibliography}
+                </a>
+              </li>
+            ))}
+          </ul>
         </section>
-      )}
+      ) : null}
       <hr />
       <section
         dangerouslySetInnerHTML={{

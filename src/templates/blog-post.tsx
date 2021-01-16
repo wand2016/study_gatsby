@@ -147,6 +147,7 @@ export const pageQuery = graphql`
         date
         tags
         bibliography
+        bibliographies
       }
     }
   }
