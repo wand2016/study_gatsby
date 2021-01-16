@@ -1,18 +1,23 @@
-import React, { FocusEventHandler } from "react"
+import React, {
+  FocusEventHandler,
+  ChangeEventHandler,
+  ChangeEvent,
+} from "react"
 import { connectSearchBox } from "react-instantsearch-dom"
 import { SearchBoxProvided } from "react-instantsearch-core"
 import { InputText } from "primereact/inputtext"
 
 type Props = {
   className?: string
+  onChange?: ChangeEventHandler
   onFocus?: FocusEventHandler
-  hasFocus?: boolean
 } & SearchBoxProvided
 
 const form: React.FC<Props> = ({
   refine,
   currentRefinement,
   className,
+  onChange,
   onFocus,
 }) => (
   <form className={className}>
@@ -20,10 +25,15 @@ const form: React.FC<Props> = ({
       <i className="pi pi-search" />
       <InputText
         value={currentRefinement}
-        onChange={e => refine((e.target as HTMLInputElement).value)}
+        onChange={e => {
+          refine((e.target as HTMLInputElement).value)
+          if (onChange) {
+            onChange(e as ChangeEvent<HTMLInputElement>)
+          }
+        }}
+        onFocus={onFocus}
         placeholder="キーワード"
         aria-label="Search"
-        onFocus={onFocus}
       />
     </span>
   </form>

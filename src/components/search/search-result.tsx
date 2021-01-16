@@ -10,6 +10,7 @@ import {
 } from "react-instantsearch-dom"
 import { Hit } from "react-instantsearch-core"
 import { Index as IndexProp } from "./types"
+import { Card } from "primereact/card"
 
 const HitCount = connectStateResults(({ searchResults }) => {
   const hitCount = searchResults && searchResults.nbHits
@@ -25,14 +26,15 @@ type PageHitProps = {
   hit: Hit
 }
 const PageHit: React.FC<PageHitProps> = ({ hit }) => (
-  <div>
-    <Link to={hit.slug}>
-      <h4>
+  <Card
+    title={
+      <Link to={hit.slug}>
         <Highlight attribute="title" hit={hit} tagName="mark" />
-      </h4>
-    </Link>
+      </Link>
+    }
+  >
     <Snippet attribute="excerpt" hit={hit} tagName="mark" />
-  </div>
+  </Card>
 )
 
 type HitsInIndexProps = {
@@ -49,7 +51,6 @@ const HitsInIndex: React.FC<HitsInIndexProps> = ({ index }) => (
 type SearchResultProps = {
   indices: IndexProp[]
   className?: string
-  show?: boolean
 }
 const SearchResult: React.FC<SearchResultProps> = ({ indices, className }) => (
   <div className={className}>

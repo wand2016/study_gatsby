@@ -1,52 +1,44 @@
 import algoliasearch from "algoliasearch/lite"
-import React, { createRef, useState } from "react"
+import React, { useRef } from "react"
 import { InstantSearch } from "react-instantsearch-dom"
-import { ThemeProvider } from "styled-components"
-import StyledSearchBox from "./styled-search-box"
-import StyledSearchResult from "./styled-search-result"
-import StyledSearchRoot from "./styled-search-root"
-import useClickOutside from "./use-click-outside"
+import SearchBox from "./search-box"
+import SearchResult from "./search-result"
 import { Index } from "./types"
+import { OverlayPanel } from "primereact/overlaypanel"
 
 export type { Index }
-
-const theme = {
-  foreground: "#050505",
-  background: "white",
-  faded: "#888",
-}
 
 type Props = {
   indices: Index[]
 }
 
 const Search: React.FC<Props> = ({ indices }) => {
-  const rootRef = createRef<HTMLDivElement>()
-  const [query, setQuery] = useState<any[]>()
-  const [hasFocus, setFocus] = useState(false)
   const searchClient = algoliasearch(
     process.env.GATSBY_ALGOLIA_APP_ID ?? "no APP_ID",
     process.env.GATSBY_ALGOLIA_SEARCH_KEY ?? "no SEARCH_KEY"
   )
 
-  useClickOutside(rootRef, () => setFocus(false))
+  const op = useRef<OverlayPanel>(null)
 
   return (
-    <ThemeProvider theme={theme}>
-      <StyledSearchRoot ref={rootRef}>
-        <InstantSearch
-          searchClient={searchClient}
-          indexName={indices[0].name}
-          onSearchStateChange={({ query }) => setQuery(query)}
+    <div>
+      <InstantSearch searchClient={searchClient} indexName={indices[0].name}>
+        <SearchBox
+          onFocus={e => op.current?.show(e, e.target)}
+          onChange={e => op.current?.show(e, e.target)}
+        />
+        <OverlayPanel
+          ref={op}
+          dismissable={true}
+          style={{
+            maxHeight: "70vh",
+            overflowY: "scroll",
+          }}
         >
-          <StyledSearchBox onFocus={() => setFocus(true)} hasFocus={hasFocus} />
-          <StyledSearchResult
-            show={query && query.length > 0 && hasFocus}
-            indices={indices}
-          />
-        </InstantSearch>
-      </StyledSearchRoot>
-    </ThemeProvider>
+          <SearchResult indices={indices} />
+        </OverlayPanel>
+      </InstantSearch>
+    </div>
   )
 }
 
