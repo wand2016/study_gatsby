@@ -3,9 +3,9 @@ import { Link, navigate } from "gatsby"
 import "@/style.scss"
 import Search, { Index } from "@/components/search"
 import styled from "styled-components"
-import Bio from "@/components/bio"
 import { Menubar } from "primereact/menubar"
 import { MenuItem } from "primereact/api"
+import moment from "moment"
 
 const searchIndices: Index[] = [
   {
@@ -58,12 +58,14 @@ const GlobalHeader: React.FC<Props> = ({ className, title }) => {
   return (
     <header className={className}>
       <div className="main-heading">
-        <h1 className="title">
-          <Link to="/">{title}</Link>
-        </h1>
-        <Bio className="bio" />
+        <h1 className="title">{title}</h1>
+        <small>
+          最終更新日時: {moment(moment.now()).format("YYYY-MM-DD HH:mm:ss")}
+        </small>
       </div>
-      <Menubar model={items} end={() => <Search indices={searchIndices} />} />
+      <nav>
+        <Menubar model={items} end={() => <Search indices={searchIndices} />} />
+      </nav>
     </header>
   )
 }
@@ -73,18 +75,11 @@ export default styled(GlobalHeader)`
     background-color: #333;
     color: #eee;
     text-align: center;
-    padding: var(--spacing-5);
     margin: 0;
-    display: flex;
     align-items: center;
 
-    .title {
+    h1 {
       margin: 0;
-      color: #eee;
-      flex-grow: 1;
-    }
-    .bio a {
-      color: #eee;
     }
   }
 `
