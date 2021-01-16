@@ -50,4 +50,4 @@ jobs:
           GATSBY_ALGOLIA_APP_ID: ${{ secrets.GATSBY_ALGOLIA_APP_ID }}
           GATSBY_ALGOLIA_SEARCH_KEY: ${{ secrets.GATSBY_ALGOLIA_SEARCH_KEY }}
           GATSBY_ALGOLIA_INDEX: ${{ secrets.GATSBY_ALGOLIA_INDEX }}
-        timeout-minutes: 10
+        timeout-minutes: 20
