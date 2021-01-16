@@ -13,19 +13,12 @@ const Posts: React.FC<Props> = ({ className, posts }) => {
   }
 
   return (
-    <ol className={className}>
+    <>
       {posts.map((post, i) => (
         <PostListItem key={i} post={post} />
       ))}
-    </ol>
+    </>
   )
 }
 
-export default styled(Posts)`
-  list-style: none;
-  padding-left: 0;
-
-  > li:not(:first-child) {
-    border-top: 1px solid silver;
-  }
-`
+export default styled(Posts)``
