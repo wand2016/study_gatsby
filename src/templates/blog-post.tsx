@@ -19,15 +19,9 @@ type Props = {
   location: Location
 }
 
-const BlogPostTemplate: React.FC<Props> = ({
-  className,
-  data,
-  pageContext,
-  location,
+const DatetimeBreadCrumb: React.FC<{ date: string | undefined }> = ({
+  date,
 }) => {
-  const post = data?.markdownRemark
-  const siteTitle = data?.site?.siteMetadata?.title || `Title`
-  const date = post?.frontmatter?.date
   const dateLocal = date ? moment(date).local() : undefined
 
   const year = dateLocal?.format("YYYY") ?? ""
@@ -38,20 +32,20 @@ const BlogPostTemplate: React.FC<Props> = ({
   const breadcrumbItems: MenuItem[] = [
     {
       label: year,
-      command(e: { originalEvent: Event; item: MenuItem }) {
-        navigate(`/time/${year}/`)
+      async command(e: { originalEvent: Event; item: MenuItem }) {
+        await navigate(`/time/${year}/`)
       },
     },
     {
       label: month,
-      command(e: { originalEvent: Event; item: MenuItem }) {
-        navigate(`/time/${year}/${month}/`)
+      async command(e: { originalEvent: Event; item: MenuItem }) {
+        await navigate(`/time/${year}/${month}/`)
       },
     },
     {
       label: day,
-      command(e: { originalEvent: Event; item: MenuItem }) {
-        navigate(`/time/${year}/${month}/${day}/`)
+      async command(e: { originalEvent: Event; item: MenuItem }) {
+        await navigate(`/time/${year}/${month}/${day}/`)
       },
     },
     {
@@ -65,6 +59,17 @@ const BlogPostTemplate: React.FC<Props> = ({
       await navigate("/calendar")
     },
   }
+  return <BreadCrumb model={breadcrumbItems} home={home} />
+}
+
+const BlogPostTemplate: React.FC<Props> = ({
+  className,
+  data,
+  pageContext,
+  location,
+}) => {
+  const post = data?.markdownRemark
+  const siteTitle = data?.site?.siteMetadata?.title || `Title`
 
   const [tocVisibility, setTocVisibility] = useState(false)
 
@@ -74,7 +79,7 @@ const BlogPostTemplate: React.FC<Props> = ({
         title={post?.frontmatter?.title ?? "no title"}
         description={post?.excerpt ?? "no description"}
       />
-      <BreadCrumb model={breadcrumbItems} home={home} />
+      <DatetimeBreadCrumb date={post?.frontmatter?.date} />
 
       <Post post={post} />
       <hr />
