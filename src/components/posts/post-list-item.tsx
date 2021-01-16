@@ -20,16 +20,18 @@ const PostListItem: React.FC<Props> = ({ className, post }) => {
 
   return (
     <div className={className}>
-      <Link to={slug ?? "/"} style={{ textDecoration: "none" }}>
-        <Card
-          key={slug}
-          title={title ?? "untitled"}
-          subTitle={dateLocal?.format("YYYY-MM-DD HH:mm:ss")}
-          style={{ marginBottom: "1em" }}
-        >
-          <section>{tags && <Tags tags={tags.filter(isJust)} />}</section>
-        </Card>
-      </Link>
+      <Card
+        key={slug}
+        title={() => (
+          <Link to={slug ?? "/"} style={{ color: "unset" }}>
+            {title ?? "untitled"}
+          </Link>
+        )}
+        subTitle={dateLocal?.format("YYYY-MM-DD HH:mm:ss")}
+        style={{ marginBottom: "1em" }}
+      >
+        <section>{tags && <Tags tags={tags.filter(isJust)} />}</section>
+      </Card>
     </div>
   )
 }

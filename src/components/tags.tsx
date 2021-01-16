@@ -19,8 +19,13 @@ const Tags: React.FC<Props> = ({ className, tags }) => {
   return (
     <div className={className}>
       {cpy.map((tag, i) => (
-        <Link to={`/tags/${tag}/`} style={{ textDecoration: "none" }}>
-          <Tag key={i} rounded={true} className="p-mr-1" value={tag} />
+        <Link
+          key={i}
+          to={`/tags/${tag}/`}
+          style={{ textDecoration: "none" }}
+          className="p-mr-1"
+        >
+          <Tag rounded={true} value={tag} />
         </Link>
       ))}
     </div>
