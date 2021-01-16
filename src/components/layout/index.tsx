@@ -1,21 +1,28 @@
-import Layout from "./layout"
 import styled from "styled-components"
+import React from "react"
+import GlobalHeader from "@/components/layout/global-header"
+
+type Props = {
+  className?: string
+  location: Location
+  title: string
+}
+const Layout: React.FC<Props> = ({ className, location, title, children }) => {
+  return (
+    <div className={className}>
+      <GlobalHeader className="global-header" title={title} />
+      <main>{children}</main>
+    </div>
+  )
+}
 
 export default styled(Layout)`
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd;
-
-  margin: var(--spacing-0) auto;
-  max-width: var(--maxWidth-wrapper);
-
-  .header-link-home {
-    font-weight: var(--fontWeight-bold);
-    font-family: var(--font-heading);
-    text-decoration: none;
-    font-size: var(--fontSize-2);
-  }
+  margin: 0 auto;
+  max-width: 960px;
 
   main {
-    margin: var(--spacing-4);
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    padding: 1rem;
   }
 `
