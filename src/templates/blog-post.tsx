@@ -1,16 +1,14 @@
 import React, { useState } from "react"
-import { graphql, Link, navigate } from "gatsby"
+import { graphql, navigate } from "gatsby"
 import Layout from "@/components/layout"
 import SEO from "@/components/seo"
-import Background from "@/components/background"
-import PostFooterMenu from "@/components/post-footer-menu"
-import TocMenu from "@/components/toc-menu"
 import Post from "@/components/post"
 import Share from "@/components/share"
 import moment from "moment"
-import styled from "styled-components"
 import { BreadCrumb } from "primereact/breadcrumb"
 import { MenuItem } from "primereact/api"
+import { Sidebar } from "primereact/sidebar"
+import { Button } from "primereact/button"
 
 type Props = {
   className?: string
@@ -85,46 +83,32 @@ const BlogPostTemplate: React.FC<Props> = ({
       <hr />
       <Share post={post} location={location} />
 
-      <Background
-        show={tocVisibility}
-        onClick={() => setTocVisibility(false)}
-      />
-      <PostFooterMenu>
-        {post?.tableOfContents ? (
-          <>
-            <TocMenu show={tocVisibility} content={post?.tableOfContents} />
-            <button
-              type="button"
-              className="toc-button"
-              onClick={() => setTocVisibility(!tocVisibility)}
-            >
-              {tocVisibility ? "▼" : "▲"}目次
-            </button>
-          </>
-        ) : null}
-      </PostFooterMenu>
+      {post?.tableOfContents ? (
+        <>
+          <Button
+            icon="pi pi-list"
+            onClick={() => setTocVisibility(true)}
+            label="目次"
+          />
+          <Sidebar
+            visible={tocVisibility}
+            onHide={() => setTocVisibility(false)}
+            position="right"
+            blockScroll={true}
+            style={{ overflowY: "scroll" }}
+          >
+            <section className="toc" key={Date()}>
+              <header>目次</header>
+              <p dangerouslySetInnerHTML={{ __html: post?.tableOfContents }} />
+            </section>
+          </Sidebar>
+        </>
+      ) : null}
     </Layout>
   )
 }
 
-export default styled(BlogPostTemplate)`
-  .toc-button {
-    cursor: pointer;
-    box-shadow: silver 0 0 1em;
-    border: none;
-    background-color: silver;
-    line-height: 1;
-    height: 2em;
-    padding: 0.5em;
-    border-radius: 1em;
-    white-space: nowrap;
-    position: absolute;
-    display: inline-block;
-    left: 1em;
-    bottom: 1em;
-    pointer-events: auto;
-  }
-`
+export default BlogPostTemplate
 
 export const pageQuery = graphql`
   query BlogPostBySlug($slug: String!) {
