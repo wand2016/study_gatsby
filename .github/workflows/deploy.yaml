@@ -51,3 +51,7 @@ jobs:
           GATSBY_ALGOLIA_SEARCH_KEY: ${{ secrets.GATSBY_ALGOLIA_SEARCH_KEY }}
           GATSBY_ALGOLIA_INDEX: ${{ secrets.GATSBY_ALGOLIA_INDEX }}
         timeout-minutes: 20
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
