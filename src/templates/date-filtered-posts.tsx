@@ -41,7 +41,6 @@ export const pageQuery = graphql`
     ) {
       totalCount
       nodes {
-        excerpt
         fields {
           slug
         }

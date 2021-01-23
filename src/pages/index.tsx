@@ -4,12 +4,10 @@ import Posts from "@/components/posts"
 import Layout from "@/components/layout"
 
 type Props = {
-  data: GatsbyTypes.PageQuery
-  pageContext: GatsbyTypes.SitePageContext
-  location: Location
+  data: GatsbyTypes.LatestQuery
 }
-const PostsIndex: React.FC<Props> = ({ data, pageContext, location }) => {
-  const posts = data?.allMarkdownRemark?.nodes
+const PostsIndex: React.FC<Props> = ({ data }) => {
+  const posts = data?.allMarkdownRemark?.nodes ?? []
 
   return (
     <Layout pageTitle="最新記事">
@@ -21,7 +19,7 @@ const PostsIndex: React.FC<Props> = ({ data, pageContext, location }) => {
 export default PostsIndex
 
 export const pageQuery = graphql`
-  query Page {
+  query Latest {
     allMarkdownRemark(
       limit: 10
       sort: { fields: [frontmatter___date], order: DESC }

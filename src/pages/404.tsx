@@ -1,12 +1,7 @@
 import React from "react"
 import Layout from "@/components/layout"
 
-type Props = {
-  data: GatsbyTypes.NotFoundPageQuery
-  location: Location
-}
-
-const NotFoundPage: React.FC<Props> = ({ data, location }) => {
+const NotFoundPage: React.FC = () => {
   return (
     <Layout pageTitle="404: Not Found">
       <h1>404: Not Found</h1>

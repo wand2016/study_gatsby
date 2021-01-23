@@ -5,10 +5,8 @@ import { isJust } from "@/utils/assertions"
 
 type Props = {
   data: GatsbyTypes.AllTagsQuery
-  location: Location
 }
-
-const NotFoundPage: React.FC<Props> = ({ data, location }) => {
+const NotFoundPage: React.FC<Props> = ({ data }) => {
   const posts = data?.allMarkdownRemark.nodes ?? []
 
   const tagCounts: Record<string, number> = {}

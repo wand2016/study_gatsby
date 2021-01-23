@@ -17,10 +17,9 @@ type CalenderHeatmapData = CalenderHeatmapDatum[]
 type Props = {
   className?: string
   data: GatsbyTypes.CalendarPageQuery
-  location: Location
 }
 
-const PostsIndex: React.FC<Props> = ({ className, data, location }) => {
+const PostsIndex: React.FC<Props> = ({ className, data }) => {
   const posts = data?.allMarkdownRemark?.nodes
 
   const calenderHeatmapDictionary: Record<string, number> = {}

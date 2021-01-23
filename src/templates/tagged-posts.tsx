@@ -34,7 +34,6 @@ export const pageQuery = graphql`
       filter: { frontmatter: { tags: { in: [$tag] } } }
     ) {
       nodes {
-        excerpt
         fields {
           slug
         }
