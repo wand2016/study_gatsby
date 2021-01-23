@@ -5,10 +5,11 @@ import { isJust } from "@/utils/assertions"
 import moment from "moment"
 import { Card } from "primereact/card"
 
-type Post = GatsbyTypes.PageQuery["allMarkdownRemark"]["nodes"][number]
+type PostListItem = (GatsbyTypes.DateFilteredPostsQuery &
+  GatsbyTypes.TaggedPostsQuery)["allMarkdownRemark"]["nodes"][number]
 type Props = {
   className?: string
-  post: Post
+  post: PostListItem
 }
 const PostListItem: React.FC<Props> = ({ className, post }) => {
   const slug = post?.fields?.slug

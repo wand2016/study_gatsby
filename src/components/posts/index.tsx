@@ -1,13 +1,11 @@
 import React from "react"
 import PostListItem from "./post-list-item"
-import styled from "styled-components"
 
 type Props = {
-  className?: string
-  posts: GatsbyTypes.PageQuery["allMarkdownRemark"]["nodes"]
+  posts: PostListItem[]
 }
 
-const Posts: React.FC<Props> = ({ className, posts }) => {
+const Posts: React.FC<Props> = ({ posts }) => {
   if (posts.length === 0) {
     return <p>記事がありません</p>
   }
@@ -21,4 +19,4 @@ const Posts: React.FC<Props> = ({ className, posts }) => {
   )
 }
 
-export default styled(Posts)``
+export default Posts

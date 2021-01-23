@@ -16,7 +16,7 @@ type CalenderHeatmapData = CalenderHeatmapDatum[]
 
 type Props = {
   className?: string
-  data: GatsbyTypes.PageQuery
+  data: GatsbyTypes.CalendarPageQuery
   location: Location
 }
 
@@ -102,20 +102,11 @@ export default styled(PostsIndex)`
 
 export const pageQuery = graphql`
   query CalendarPage {
-    site {
-      siteMetadata {
-        title
-      }
-    }
     allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
       nodes {
-        fields {
-          slug
-        }
         frontmatter {
           date
           title
-          tags
         }
       }
     }

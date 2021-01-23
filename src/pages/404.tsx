@@ -1,5 +1,4 @@
 import React from "react"
-import { graphql } from "gatsby"
 import Layout from "@/components/layout"
 
 type Props = {
@@ -17,13 +16,3 @@ const NotFoundPage: React.FC<Props> = ({ data, location }) => {
 }
 
 export default NotFoundPage
-
-export const pageQuery = graphql`
-  query NotFoundPage {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-  }
-`

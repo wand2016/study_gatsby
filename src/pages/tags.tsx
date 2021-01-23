@@ -4,7 +4,7 @@ import Layout from "@/components/layout"
 import { isJust } from "@/utils/assertions"
 
 type Props = {
-  data: GatsbyTypes.PageQuery
+  data: GatsbyTypes.AllTagsQuery
   location: Location
 }
 
@@ -40,18 +40,12 @@ export default NotFoundPage
 
 export const pageQuery = graphql`
   query AllTags {
-    site {
-      siteMetadata {
-        title
-      }
-    }
     allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
       nodes {
         fields {
           slug
         }
         frontmatter {
-          title
           tags
         }
       }

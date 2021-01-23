@@ -22,11 +22,6 @@ export default PostsIndex
 
 export const pageQuery = graphql`
   query Page {
-    site {
-      siteMetadata {
-        title
-      }
-    }
     allMarkdownRemark(
       limit: 10
       sort: { fields: [frontmatter___date], order: DESC }
