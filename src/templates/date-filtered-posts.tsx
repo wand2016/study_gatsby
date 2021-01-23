@@ -10,7 +10,6 @@ type Props = {
   pageContext: GatsbyTypes.SitePageContext
 }
 const DateFilteredPostsIndex: React.FC<Props> = ({ data, pageContext }) => {
-  const siteTitle = data?.site?.siteMetadata?.title ?? `no siteTitle`
   const posts = data?.allMarkdownRemark?.nodes
   const periodStart = moment(pageContext.periodStart)
   const periodEnd = moment(pageContext.periodEnd)
@@ -21,7 +20,7 @@ const DateFilteredPostsIndex: React.FC<Props> = ({ data, pageContext }) => {
   const pageTitle = `posts during ${period}`
 
   return (
-    <Layout title={siteTitle}>
+    <Layout>
       <SEO pageTitle={pageTitle} />
       {pageTitle}
       <Posts posts={posts} />

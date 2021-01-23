@@ -10,11 +10,10 @@ type Props = {
   location: Location
 }
 const PostsIndex: React.FC<Props> = ({ data, pageContext, location }) => {
-  const siteTitle = data?.site?.siteMetadata?.title ?? `no siteTitle`
   const posts = data?.allMarkdownRemark?.nodes
 
   return (
-    <Layout title={siteTitle}>
+    <Layout>
       <SEO pageTitle="最新記事" />
       <Posts posts={posts} />
     </Layout>

@@ -10,12 +10,11 @@ type Props = {
 }
 const TaggedPostsIndex: React.FC<Props> = ({ data, pageContext }) => {
   const tag = pageContext.tag ?? "no tag"
-  const siteTitle = data?.site?.siteMetadata?.title ?? `no siteTitle`
   const posts = data?.allMarkdownRemark?.nodes
   const pageTitle = `searched by tag ${tag}`
 
   return (
-    <Layout title={siteTitle}>
+    <Layout>
       <SEO pageTitle={pageTitle} />
       {pageTitle}
       <Posts posts={posts} />

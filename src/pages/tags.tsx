@@ -10,7 +10,6 @@ type Props = {
 }
 
 const NotFoundPage: React.FC<Props> = ({ data, location }) => {
-  const siteTitle = data?.site?.siteMetadata?.title ?? "no title"
   const posts = data?.allMarkdownRemark.nodes ?? []
 
   const tagCounts: Record<string, number> = {}
@@ -23,7 +22,7 @@ const NotFoundPage: React.FC<Props> = ({ data, location }) => {
   const tags = Object.keys(tagCounts).sort()
 
   return (
-    <Layout title={siteTitle}>
+    <Layout>
       <SEO pageTitle="タグ別記事" />
       <h1>タグ一覧</h1>
       <ul>

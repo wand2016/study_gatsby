@@ -1,7 +1,6 @@
 import styled from "styled-components"
 import React from "react"
 import GlobalHeader from "@/components/layout/global-header"
-
 import "github-markdown-css/github-markdown.css"
 import "primeicons/primeicons.css"
 import "primeflex/primeflex.css"
@@ -10,12 +9,11 @@ import "primereact/resources/primereact.min.css"
 
 type Props = {
   className?: string
-  title: string
 }
-const Layout: React.FC<Props> = ({ className, title, children }) => {
+const Layout: React.FC<Props> = ({ className, children }) => {
   return (
     <div className={className}>
-      <GlobalHeader className="global-header" title={title} />
+      <GlobalHeader className="global-header" />
       <main>{children}</main>
     </div>
   )

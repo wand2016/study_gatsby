@@ -15,14 +15,13 @@ type Props = {
 
 const BlogPostTemplate: React.FC<Props> = ({ className, data, location }) => {
   const post = data?.markdownRemark
-  const siteTitle = data?.site?.siteMetadata?.title || `Title`
   const date = post?.frontmatter?.date
   const tocContent = post?.tableOfContents
 
   const [tocVisibility, setTocVisibility] = useState(false)
 
   return (
-    <Layout className={className} title={siteTitle}>
+    <Layout className={className}>
       <SEO
         pageTitle={post?.frontmatter?.title}
         description={post?.excerpt ?? "no description"}

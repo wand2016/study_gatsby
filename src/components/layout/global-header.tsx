@@ -1,5 +1,5 @@
 import React from "react"
-import { Link, navigate } from "gatsby"
+import { graphql, Link, navigate, useStaticQuery } from "gatsby"
 import "@/style.scss"
 import Search, { Index } from "@/components/search"
 import styled from "styled-components"
@@ -15,7 +15,6 @@ const searchIndices: Index[] = [
 
 type Props = {
   className?: string
-  title: string
 }
 type PathAndLabel = {
   path: string
@@ -23,7 +22,10 @@ type PathAndLabel = {
   icon?: string
 }
 
-const GlobalHeader: React.FC<Props> = ({ className, title }) => {
+const GlobalHeader: React.FC<Props> = ({ className }) => {
+  const { site } = useStaticQuery<GatsbyTypes.GlobalHeaderQuery>(pageQuery)
+  const title = site?.siteMetadata?.title ?? "no title"
+
   const pathAndLabels: PathAndLabel[] = [
     {
       path: "/",
@@ -81,6 +83,16 @@ export default styled(GlobalHeader)`
 
     h1 {
       margin: 0;
+    }
+  }
+`
+
+export const pageQuery = graphql`
+  query GlobalHeader {
+    site {
+      siteMetadata {
+        title
+      }
     }
   }
 `

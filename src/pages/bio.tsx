@@ -19,7 +19,6 @@ type Certification = {
 }
 
 const Bio: React.FC<Props> = ({ data }) => {
-  const siteTitle = data?.site?.siteMetadata?.title ?? "no title"
   const author = data?.site?.siteMetadata?.author
   const social = data?.site?.siteMetadata?.social
   const github = data?.site?.siteMetadata?.siteUrls?.github
@@ -55,7 +54,7 @@ const Bio: React.FC<Props> = ({ data }) => {
   }, [])
 
   return (
-    <Layout title={siteTitle}>
+    <Layout>
       <SEO pageTitle="bio" />
       <article>
         <section>
