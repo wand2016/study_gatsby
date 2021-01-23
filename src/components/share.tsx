@@ -9,12 +9,11 @@ import {
 } from "react-share"
 import styled from "styled-components"
 
-type Post = GatsbyTypes.BlogPostBySlugQuery["markdownRemark"]
-
+type PostProp = GatsbyTypes.BlogPostBySlugQuery["markdownRemark"]
 type Props = {
   className?: string
   location: Location
-  post: Post
+  post: PostProp
 }
 
 const Share: React.FC<Props> = ({ className, location, post }) => {
