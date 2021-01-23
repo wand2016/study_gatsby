@@ -3,9 +3,19 @@ import { graphql } from "gatsby"
 import GatsbyImage from "gatsby-image"
 import Layout from "@/components/layout"
 import SEO from "@/components/seo"
+import { DataTable } from "primereact/datatable"
+import { isJust } from "@/utils/assertions"
+import { Column } from "primereact/column"
 
 type Props = {
   data: GatsbyTypes.BioPageQuery
+}
+
+type Certification = {
+  name?: string
+  since?: string
+  until?: string
+  embed?: string
 }
 
 const Bio: React.FC<Props> = ({ data }) => {
@@ -14,6 +24,10 @@ const Bio: React.FC<Props> = ({ data }) => {
   const social = data?.site?.siteMetadata?.social
   const github = data?.site?.siteMetadata?.siteUrls?.github
   const avatar = data?.avatar?.childImageSharp?.fixed
+
+  const certifications: Certification[] = (
+    data?.site?.siteMetadata?.certifications ?? []
+  ).filter(isJust)
 
   return (
     <Layout location={location} title={siteTitle}>
@@ -49,6 +63,12 @@ const Bio: React.FC<Props> = ({ data }) => {
             </li>
           </ul>
         </div>
+        <DataTable value={certifications}>
+          <Column field="name" header="資格名"></Column>
+          <Column field="since" header="since"></Column>
+          <Column field="until" header="until"></Column>
+          <Column field="embed" header="バッジ"></Column>
+        </DataTable>
       </article>
     </Layout>
   )
