@@ -1,10 +1,10 @@
 import React from "react"
-import { graphql, Link, navigate, useStaticQuery } from "gatsby"
-import "@/style.scss"
+import { graphql, navigate, useStaticQuery } from "gatsby"
 import Search, { Index } from "@/components/search"
 import styled from "styled-components"
 import { Menubar } from "primereact/menubar"
 import { MenuItem } from "primereact/api"
+import moment from "moment"
 
 const searchIndices: Index[] = [
   {
@@ -23,8 +23,14 @@ type PathAndLabel = {
 }
 
 const GlobalHeader: React.FC<Props> = ({ className }) => {
-  const { site } = useStaticQuery<GatsbyTypes.GlobalHeaderQuery>(pageQuery)
+  const { site, siteBuildMetadata } = useStaticQuery<
+    GatsbyTypes.GlobalHeaderQuery
+  >(pageQuery)
   const title = site?.siteMetadata?.title ?? "no title"
+  const buildTimeString = siteBuildMetadata?.buildTime
+  const buildTime = buildTimeString
+    ? moment(buildTimeString).format("YYYY-MM-DD HH:mm:ss")
+    : undefined
 
   const pathAndLabels: PathAndLabel[] = [
     {
@@ -65,6 +71,7 @@ const GlobalHeader: React.FC<Props> = ({ className }) => {
     <header className={className}>
       <div className="main-heading">
         <h1 className="title">{title}</h1>
+        {buildTime ? `最終更新日: ${buildTime}` : ""}
       </div>
       <nav>
         <Menubar model={items} end={() => <Search indices={searchIndices} />} />
@@ -93,6 +100,9 @@ export const pageQuery = graphql`
       siteMetadata {
         title
       }
+    }
+    siteBuildMetadata {
+      buildTime
     }
   }
 `
