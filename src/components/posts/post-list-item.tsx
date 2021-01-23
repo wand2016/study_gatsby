@@ -1,7 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
 import Tags from "@/components/tags"
-import styled from "styled-components"
 import { isJust } from "@/utils/assertions"
 import moment from "moment"
 import { Card } from "primereact/card"

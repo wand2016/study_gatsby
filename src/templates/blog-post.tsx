@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { graphql, navigate } from "gatsby"
+import { graphql } from "gatsby"
 import Layout from "@/components/layout"
 import Post from "@/components/post"
 import Share from "@/components/share"

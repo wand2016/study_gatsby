@@ -2,7 +2,6 @@ import React from "react"
 import { graphql } from "gatsby"
 import Posts from "@/components/posts"
 import Layout from "@/components/layout"
-import SEO from "@/components/seo"
 
 type Props = {
   data: GatsbyTypes.PageQuery
