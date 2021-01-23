@@ -5,7 +5,6 @@ import Search, { Index } from "@/components/search"
 import styled from "styled-components"
 import { Menubar } from "primereact/menubar"
 import { MenuItem } from "primereact/api"
-import moment from "moment"
 
 const searchIndices: Index[] = [
   {
@@ -59,9 +58,6 @@ const GlobalHeader: React.FC<Props> = ({ className, title }) => {
     <header className={className}>
       <div className="main-heading">
         <h1 className="title">{title}</h1>
-        <small>
-          最終更新日時: {moment(moment.now()).format("YYYY-MM-DD HH:mm:ss")}
-        </small>
       </div>
       <nav>
         <Menubar model={items} end={() => <Search indices={searchIndices} />} />
