@@ -11,14 +11,29 @@ type Props = {
 const NotFoundPage: React.FC<Props> = ({ data }) => {
   const posts = data?.allMarkdownRemark.nodes ?? []
 
-  const tagCounts: Record<string, number> = {}
-  for (const post of posts) {
-    const nodeTags = (post?.frontmatter?.tags ?? []).filter(isJust)
-    for (const nodeTag of nodeTags) {
-      tagCounts[nodeTag] = (tagCounts[nodeTag] ?? 0) + 1
+  function countTags() {
+    const tagCounts: Record<string, number> = {}
+    for (const post of posts) {
+      const nodeTags = (post?.frontmatter?.tags ?? []).filter(isJust)
+      for (const nodeTag of nodeTags) {
+        tagCounts[nodeTag] = (tagCounts[nodeTag] ?? 0) + 1
+      }
     }
+    return tagCounts
   }
+  const tagCounts = countTags()
+
   const tags = Object.keys(tagCounts).sort()
+  const index: Record<string, string[]> = {}
+  for (const tag of tags) {
+    const firstLetter = /[a-zA-Z]/.test(tag[0])
+      ? tag[0].toUpperCase()
+      : "その他"
+    if (!index[firstLetter]) {
+      index[firstLetter] = []
+    }
+    index[firstLetter].push(tag)
+  }
 
   return (
     <Layout pageTitle="タグ別記事">
@@ -30,20 +45,29 @@ const NotFoundPage: React.FC<Props> = ({ data }) => {
           </>
         )}
       >
-        <div style={{ lineHeight: 2 }}>
-          {tags.map((tag, i) => (
-            <Link
-              key={i}
-              to={`/tags/${tag}`}
-              style={{ textDecoration: "none" }}
-            >
-              <Tag
-                rounded
-                className="p-mr-1"
-                value={`${tag} (${tagCounts[tag]})`}
-              />
-            </Link>
-          ))}
+        <div>
+          {Object.entries(index).map(([key, tags]) => {
+            return (
+              <section>
+                <h4>{key}</h4>
+                <div style={{ lineHeight: 2 }}>
+                  {tags.map((tag, i) => (
+                    <Link
+                      key={i}
+                      to={`/tags/${tag}`}
+                      style={{ textDecoration: "none" }}
+                    >
+                      <Tag
+                        rounded
+                        className="p-mr-1"
+                        value={`${tag} (${tagCounts[tag]})`}
+                      />
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            )
+          })}
         </div>
       </Panel>
     </Layout>
