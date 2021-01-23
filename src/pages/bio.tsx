@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { graphql } from "gatsby"
 import GatsbyImage from "gatsby-image"
 import Layout from "@/components/layout"
@@ -24,16 +24,34 @@ const Bio: React.FC<Props> = ({ data }) => {
   const social = data?.site?.siteMetadata?.social
   const github = data?.site?.siteMetadata?.siteUrls?.github
   const avatar = data?.avatar?.childImageSharp?.fixed
-
   const certifications: Certification[] = (
     data?.site?.siteMetadata?.certifications ?? []
   ).filter(isJust)
+
+  type BadgeInnerHTMLs = Record<string, string | undefined>
+  const [badgeInnerHTMLs, setBadgeInnerHTMLs] = useState<BadgeInnerHTMLs>({})
+
+  const updateBadgeInnerHTMLs = () => {
+    const badgeInnerHTMLs: BadgeInnerHTMLs = {}
+    document.querySelectorAll(".badge-placeholder").forEach(badgeElem => {
+      const name = (badgeElem as HTMLBaseElement).dataset.name
+      badgeInnerHTMLs[name ?? ""] = badgeElem.innerHTML
+    })
+    setBadgeInnerHTMLs(badgeInnerHTMLs)
+  }
 
   useEffect(() => {
     const script = document.createElement("script")
     script.setAttribute("type", "text/javascript")
     script.src = "https://www.youracclaim.com/assets/utilities/embed.js"
+
+    // バッジのdivがiframeに置換されたあとで
+    script.addEventListener("load", updateBadgeInnerHTMLs)
+
     document.head.appendChild(script)
+    return () => {
+      document.head.removeChild(script)
+    }
   }, [])
 
   return (
@@ -70,7 +88,7 @@ const Bio: React.FC<Props> = ({ data }) => {
             </li>
           </ul>
         </div>
-        <DataTable value={certifications}>
+        <DataTable value={certifications} sortField={"since"} sortOrder={-1}>
           <Column field="name" header="資格名" sortable />
           <Column field="since" header="取得日" sortable />
           <Column field="until" header="失効日" sortable />
@@ -79,14 +97,25 @@ const Bio: React.FC<Props> = ({ data }) => {
             header="バッジ"
             body={(data: Certification) => (
               <div
-                key={Date()}
                 dangerouslySetInnerHTML={{
-                  __html: decodeURIComponent(data.embed ?? ""),
+                  __html: badgeInnerHTMLs[data.name ?? ""] ?? "",
                 }}
               />
             )}
           />
         </DataTable>
+        {
+          // youracclaimのスクリプトでdivタグをiframeに置換したものを保持する用
+          certifications.map(cert => (
+            <div
+              key={cert.name}
+              className="badge-placeholder"
+              data-name={cert.name}
+              dangerouslySetInnerHTML={{ __html: cert.embed ?? "" }}
+              style={{ display: "none" }}
+            />
+          ))
+        }
       </article>
     </Layout>
   )
