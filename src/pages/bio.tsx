@@ -6,6 +6,7 @@ import SEO from "@/components/seo"
 import { DataTable } from "primereact/datatable"
 import { isJust } from "@/utils/assertions"
 import { Column } from "primereact/column"
+import { Helmet } from "react-helmet"
 
 type Props = {
   data: GatsbyTypes.BioPageQuery
@@ -64,12 +65,30 @@ const Bio: React.FC<Props> = ({ data }) => {
           </ul>
         </div>
         <DataTable value={certifications}>
-          <Column field="name" header="資格名"></Column>
-          <Column field="since" header="since"></Column>
-          <Column field="until" header="until"></Column>
-          <Column field="embed" header="バッジ"></Column>
+          <Column field="name" header="資格名" sortable />
+          <Column field="since" header="取得日" sortable />
+          <Column field="until" header="失効日" sortable />
+          <Column
+            field="embed"
+            header="バッジ"
+            body={(data: Certification) => (
+              <div
+                key={Date()}
+                dangerouslySetInnerHTML={{
+                  __html: decodeURIComponent(data.embed ?? ""),
+                }}
+              />
+            )}
+          />
         </DataTable>
       </article>
+      <Helmet>
+        <script
+          type="text/javascript"
+          async
+          src="https://www.youracclaim.com/assets/utilities/embed.js"
+        ></script>
+      </Helmet>
     </Layout>
   )
 }

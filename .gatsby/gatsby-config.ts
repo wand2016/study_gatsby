@@ -57,7 +57,7 @@ export default {
         since: "2019-06-01",
         until: "2022-06-01",
         embed:
-          '<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="f57fef30-813e-4c92-bfab-a10555dd78f8" data-share-badge-host="https://www.youracclaim.com"></div><script type="text/javascript" async src="//cdn.youracclaim.com/assets/utilities/embed.js"></script>',
+          '<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="f57fef30-813e-4c92-bfab-a10555dd78f8" data-share-badge-host="https://www.youracclaim.com"></div>',
       },
       {
         name: "OSS-DB silver",
@@ -73,27 +73,27 @@ export default {
         since: "2020-03-20",
         until: "2023-03-20",
         embed:
-          '<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="49ee6b32-f45d-4ffd-ae0f-ec87e66c2a10" data-share-badge-host="https://www.youracclaim.com"></div><script type="text/javascript" async src="//cdn.youracclaim.com/assets/utilities/embed.js"></script>',
+          '<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="49ee6b32-f45d-4ffd-ae0f-ec87e66c2a10" data-share-badge-host="https://www.youracclaim.com"></div>',
       },
       {
         name: "AWS Certified SysOps Administrator Associate",
         since: "2020-04-05",
         until: "2023-04-05",
         embed:
-          '<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="d4f87421-0968-4220-8c99-f13a39bd72e1" data-share-badge-host="https://www.youracclaim.com"></div><script type="text/javascript" async src="//cdn.youracclaim.com/assets/utilities/embed.js"></script>',
+          '<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="d4f87421-0968-4220-8c99-f13a39bd72e1" data-share-badge-host="https://www.youracclaim.com"></div>',
       },
       {
         name: "Oracle認定 MySQL5.6 Developer",
         since: "2020-06-05",
         embed:
-          '<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="a2e7e0e7-df59-49c3-bf75-bf6e595c62f6" data-share-badge-host="https://www.youracclaim.com"></div><script type="text/javascript" async src="//cdn.youracclaim.com/assets/utilities/embed.js"></script>',
+          '<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="a2e7e0e7-df59-49c3-bf75-bf6e595c62f6" data-share-badge-host="https://www.youracclaim.com"></div>',
       },
       {
         name: "CCNA",
         since: "2020-07-04",
         until: "2023-07-04",
         embed:
-          '<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="b283a0e9-ea4c-4603-bf18-434ce55bcb20" data-share-badge-host="https://www.youracclaim.com"></div><script type="text/javascript" async src="//cdn.youracclaim.com/assets/utilities/embed.js"></script>',
+          '<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="b283a0e9-ea4c-4603-bf18-434ce55bcb20" data-share-badge-host="https://www.youracclaim.com"></div>',
       },
       {
         name: "CG検定/CGエンジニアベーシック",
