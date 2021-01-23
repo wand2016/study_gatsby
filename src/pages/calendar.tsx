@@ -47,7 +47,8 @@ const PostsIndex: React.FC<Props> = ({ className, data }) => {
 
   return (
     <Layout className={className} pageTitle="日付別記事">
-      <Panel header="SP用のUIは検討中...">
+      <Panel header="日付別記事">
+        SP用のUIは検討中...
         <div className="outer">
           <div className="inner">
             <CalendarHeatmap

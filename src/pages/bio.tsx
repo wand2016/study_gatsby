@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { graphql } from "gatsby"
-import GatsbyImage from "gatsby-image"
 import Layout from "@/components/layout"
-import { DataTable } from "primereact/datatable"
 import { isJust } from "@/utils/assertions"
-import { Column } from "primereact/column"
+import Author from "@/components/author"
+import Certifications from "@/components/certifications"
+import { Panel } from "primereact/panel"
 
 type Props = {
   data: GatsbyTypes.BioPageQuery
@@ -18,117 +18,43 @@ type Certification = {
 }
 
 const Bio: React.FC<Props> = ({ data }) => {
-  const author = data?.site?.siteMetadata?.author
-  const social = data?.site?.siteMetadata?.social
-  const github = data?.site?.siteMetadata?.siteUrls?.github
-  const avatar = data?.avatar?.childImageSharp?.fixed
   const certifications: Certification[] = (
     data?.site?.siteMetadata?.certifications ?? []
   ).filter(isJust)
 
-  type BadgeInnerHTMLs = Record<string, string | undefined>
-  const [badgeInnerHTMLs, setBadgeInnerHTMLs] = useState<BadgeInnerHTMLs>({})
-
-  const updateBadgeInnerHTMLs = () => {
-    const badgeInnerHTMLs: BadgeInnerHTMLs = {}
-    document.querySelectorAll(".badge-placeholder").forEach(badgeElem => {
-      const name = (badgeElem as HTMLBaseElement).dataset.name
-      badgeInnerHTMLs[name ?? ""] = badgeElem.innerHTML
-    })
-    setBadgeInnerHTMLs(badgeInnerHTMLs)
-  }
-
-  useEffect(() => {
-    const script = document.createElement("script")
-    script.setAttribute("type", "text/javascript")
-    script.src = "https://www.youracclaim.com/assets/utilities/embed.js"
-
-    // バッジのdivがiframeに置換されたあとで
-    script.addEventListener("load", updateBadgeInnerHTMLs)
-
-    document.head.appendChild(script)
-    return () => {
-      document.head.removeChild(script)
-    }
-  }, [])
-
   return (
     <Layout pageTitle="bio">
       <article>
-        <section>
-          <h3>About Me</h3>
-          {avatar && (
-            <GatsbyImage
-              fixed={avatar}
-              alt={author?.name ?? ""}
-              className="bio-avatar"
-              imgStyle={{
-                borderRadius: `50%`,
-              }}
-            />
+        <Panel
+          header={() => (
+            <>
+              <span className="pi pi-fw pi-user p-mr-1" /> About Me
+            </>
           )}
-          {author?.name && (
-            <div className="bio-description">
-              {author.name}
-              <br />
-              {author?.summary ?? ""}
-            </div>
+          className="p-mb-2"
+        >
+          <Author
+            author={{
+              avatar: data?.avatar?.childImageSharp?.fixed,
+              name: data?.site?.siteMetadata?.author?.name ?? "",
+              summary: data?.site?.siteMetadata?.author?.summary ?? "",
+              social: {
+                twitter: data?.site?.siteMetadata?.social?.twitter,
+              },
+              github: data?.site?.siteMetadata?.siteUrls?.github,
+            }}
+          />
+        </Panel>
+        <Panel
+          header={() => (
+            <>
+              <span className="pi pi-fw pi-pencil p-mr-1" /> 保有資格
+            </>
           )}
-          <ul>
-            <li>
-              <a
-                href={`https://twitter.com/${social?.twitter ?? ""}`}
-                target="_blank"
-              >
-                twitter
-              </a>
-            </li>
-            <li>
-              <a href={github} target="_blank">
-                GitHub
-              </a>
-            </li>
-          </ul>
-        </section>
-        <section>
-          <h3>保有資格</h3>
-          <DataTable
-            value={certifications}
-            sortField={"since"}
-            sortOrder={-1}
-            dataKey={"name"}
-          >
-            <Column field="name" header="資格名" sortable />
-            <Column field="since" header="取得日" sortable />
-            <Column field="until" header="失効日" sortable />
-            <Column
-              field="embed"
-              header="バッジ"
-              body={(data: Certification) => (
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: badgeInnerHTMLs[data.name ?? ""] ?? "",
-                  }}
-                />
-              )}
-            />
-          </DataTable>
-        </section>
+        >
+          <Certifications certifications={certifications} />
+        </Panel>
       </article>
-      <aside>
-        {
-          // youracclaimのスクリプトでdivタグをiframeに置換したものを保持する用
-          certifications.map(cert => (
-            <div
-              key={cert.name}
-              className="badge-placeholder"
-              data-name={cert.name}
-              dangerouslySetInnerHTML={{ __html: cert.embed ?? "" }}
-              style={{ display: "none" }}
-            />
-          ))
-        }
-      </aside>
     </Layout>
   )
 }
