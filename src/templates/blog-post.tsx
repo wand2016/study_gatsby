@@ -2,9 +2,15 @@ import React, { useState } from "react"
 import { graphql } from "gatsby"
 import Layout from "@/components/layout"
 import Post from "@/components/post"
-import Share from "@/components/share"
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  FacebookIcon,
+  TwitterIcon,
+  LineShareButton,
+  LineIcon,
+} from "react-share"
 import Toc from "@/components/toc"
-import DatetimeBreadCrumb from "@/components/datetime-bread-crumb"
 
 type Props = {
   className?: string
@@ -12,35 +18,65 @@ type Props = {
   location: Location
 }
 
-const BlogPostTemplate: React.FC<Props> = ({ className, data, location }) => {
-  const post = data?.markdownRemark
-  const date = post?.frontmatter?.date
-  const tocContent = post?.tableOfContents
-
+type Just<T> = T extends undefined ? never : T
+type PostFooterMenuPropsType = {
+  location: Location
+  post: Just<GatsbyTypes.BlogPostBySlugQuery["markdownRemark"]>
+}
+const PostFooterMenu: React.FC<PostFooterMenuPropsType> = ({
+  location,
+  post,
+}) => {
   const [tocVisibility, setTocVisibility] = useState(false)
+  const url = location.href
+  const iconSize = 28
 
   return (
+    <footer className="p-p-3">
+      <div className="p-d-flex">
+        <div className="p-d-inline-flex">
+          <TwitterShareButton url={url} title={post?.frontmatter?.title}>
+            <TwitterIcon round size={iconSize} />
+          </TwitterShareButton>
+        </div>
+        <div className="p-d-inline-flex p-ml-2">
+          <FacebookShareButton url={url} quote={post?.excerpt}>
+            <FacebookIcon round size={iconSize} />
+          </FacebookShareButton>
+        </div>
+        <div className="p-d-inline-flex p-ml-2">
+          <LineShareButton url={url}>
+            <LineIcon round size={iconSize} />
+          </LineShareButton>
+        </div>
+        {post.tableOfContents ? (
+          <div className="p-d-inline-flex p-ml-auto">
+            <Toc
+              content={post.tableOfContents}
+              visibility={tocVisibility}
+              onShow={() => setTocVisibility(true)}
+              onHide={() => setTocVisibility(false)}
+            />
+          </div>
+        ) : null}
+      </div>
+    </footer>
+  )
+}
+
+const BlogPostTemplate: React.FC<Props> = ({ className, data, location }) => {
+  const post = data?.markdownRemark
+
+  return post ? (
     <Layout
       className={className}
       pageTitle={post?.frontmatter?.title ?? "untitled"}
       seoProps={{ description: post?.excerpt ?? "no description" }}
+      footer={<PostFooterMenu location={location} post={post} />}
     >
-      {date ? <DatetimeBreadCrumb date={date} /> : null}
-
       <Post post={post} />
-      <hr />
-      <Share post={post} location={location} />
-
-      {tocContent ? (
-        <Toc
-          content={tocContent}
-          visibility={tocVisibility}
-          onShow={() => setTocVisibility(true)}
-          onHide={() => setTocVisibility(false)}
-        />
-      ) : null}
     </Layout>
-  )
+  ) : null
 }
 
 export default BlogPostTemplate

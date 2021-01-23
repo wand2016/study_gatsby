@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import React from "react"
+import React, { PropsWithChildren } from "react"
 import SEO, { SEOProps } from "@/components/seo"
 import GlobalHeader from "@/components/layout/global-header"
 import "github-markdown-css/github-markdown.css"
@@ -13,12 +13,14 @@ type Props = {
   className?: string
   pageTitle: SEOProps["pageTitle"]
   seoProps?: Omit<SEOProps, "pageTitle">
+  footer?: PropsWithChildren<any>["children"]
 }
 const Layout: React.FC<Props> = ({
   className,
   pageTitle,
   seoProps,
   children,
+  footer,
 }) => {
   const mergedSeoProps: SEOProps = {
     pageTitle,
@@ -29,7 +31,8 @@ const Layout: React.FC<Props> = ({
       <div className="wrapper">
         <SEO {...mergedSeoProps} />
         <GlobalHeader className="global-header" />
-        <main>{children}</main>
+        <main className="p-p-3">{children}</main>
+        {footer ? <footer>{footer}</footer> : null}
       </div>
     </div>
   )
@@ -43,11 +46,15 @@ export default styled(Layout)`
     margin: 0 auto;
     max-width: 960px;
 
-    main {
-      border-left: 1px solid var(--surface-d);
-      border-right: 1px solid var(--surface-d);
-      border-bottom: 1px solid var(--surface-d);
-      padding: 1rem;
+    > main {
+      border: 1px solid var(--surface-d);
+    }
+
+    > footer {
+      background-color: var(--surface-c);
+      border: 1px solid var(--surface-d);
+      position: sticky;
+      bottom: 0;
     }
   }
 `

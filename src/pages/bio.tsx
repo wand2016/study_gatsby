@@ -31,7 +31,7 @@ const Bio: React.FC<Props> = ({ data }) => {
               <span className="pi pi-fw pi-user p-mr-1" /> About Me
             </>
           )}
-          className="p-mb-2"
+          className="p-mb-3"
         >
           <Author
             author={{
