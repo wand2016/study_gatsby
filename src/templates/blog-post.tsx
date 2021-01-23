@@ -1,8 +1,9 @@
-import React from "react"
+import React, { useState } from "react"
 import { graphql } from "gatsby"
 import Layout from "@/components/layout"
 import Post from "@/components/post"
 import PostFooterMenu from "@/components/post-footer-menu"
+import Toc from "@/components/toc"
 
 type Props = {
   className?: string
@@ -12,15 +13,29 @@ type Props = {
 
 const BlogPostTemplate: React.FC<Props> = ({ className, data, location }) => {
   const post = data?.markdownRemark
-
+  const [tocVisibility, setTocVisibility] = useState(false)
   return post ? (
     <Layout
       className={className}
       pageTitle={post?.frontmatter?.title ?? "untitled"}
       seoProps={{ description: post?.excerpt ?? "no description" }}
-      footer={<PostFooterMenu location={location} post={post} />}
+      footer={
+        <PostFooterMenu
+          location={location}
+          post={post}
+          onTocShown={() => setTocVisibility(true)}
+        />
+      }
     >
       <Post post={post} />
+      const [tocVisibility, setTocVisibility] = useState(false)
+      {post.tableOfContents ? (
+        <Toc
+          content={post.tableOfContents}
+          visibility={tocVisibility}
+          onHide={() => setTocVisibility(false)}
+        />
+      ) : null}
     </Layout>
   ) : null
 }

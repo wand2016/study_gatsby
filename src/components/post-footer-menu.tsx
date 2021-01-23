@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import {
   FacebookShareButton,
   TwitterShareButton,
@@ -7,15 +7,19 @@ import {
   LineShareButton,
   LineIcon,
 } from "react-share"
-import Toc from "@/components/toc"
+import { Button } from "primereact/button"
 
 type Just<T> = T extends undefined ? never : T
 type PropsType = {
   location: Location
   post: Just<GatsbyTypes.BlogPostBySlugQuery["markdownRemark"]>
+  onTocShown: () => unknown
 }
-const PostFooterMenu: React.FC<PropsType> = ({ location, post }) => {
-  const [tocVisibility, setTocVisibility] = useState(false)
+const PostFooterMenu: React.FC<PropsType> = ({
+  location,
+  post,
+  onTocShown,
+}) => {
   const url = location.href
   const iconSize = 28
 
@@ -39,11 +43,10 @@ const PostFooterMenu: React.FC<PropsType> = ({ location, post }) => {
         </div>
         {post.tableOfContents ? (
           <div className="p-d-inline-flex p-ml-auto">
-            <Toc
-              content={post.tableOfContents}
-              visibility={tocVisibility}
-              onShow={() => setTocVisibility(true)}
-              onHide={() => setTocVisibility(false)}
+            <Button
+              icon="pi pi-list"
+              onClick={() => onTocShown()}
+              label="目次"
             />
           </div>
         ) : null}
