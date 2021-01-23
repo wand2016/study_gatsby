@@ -13,7 +13,7 @@ const DatetimeBreadCrumb: React.FC<PropsType> = ({ date }) => {
   const year = dateLocal.format("YYYY") ?? ""
   const month = dateLocal.format("MM") ?? ""
   const day = dateLocal.format("DD") ?? ""
-  const time = dateLocal.format("HH:mm:SS") ?? ""
+  const time = dateLocal.format("HH:mm:ss") ?? ""
 
   const breadCrumbItems: MenuItem[] = [
     {
