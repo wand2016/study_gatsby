@@ -1,7 +1,6 @@
 import React from "react"
 import { navigate, graphql } from "gatsby"
 import Layout from "@/components/layout"
-import SEO from "@/components/seo"
 import CalendarHeatmap from "react-calendar-heatmap"
 import "react-calendar-heatmap/dist/styles.css"
 import moment from "moment"
@@ -47,8 +46,7 @@ const PostsIndex: React.FC<Props> = ({ className, data, location }) => {
   const startDate = new Date(dates[0])
 
   return (
-    <Layout className={className}>
-      <SEO pageTitle="日付別記事" />
+    <Layout className={className} pageTitle="日付別記事">
       SP用のUIは検討中...
       <div className="outer">
         <div className="inner">

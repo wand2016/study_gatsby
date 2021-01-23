@@ -4,15 +4,14 @@ import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
 type MetaProps = JSX.IntrinsicElements["meta"]
-type Props = {
+export type SEOProps = {
   description?: string
   lang?: string
   meta?: MetaProps[]
-  pageTitle?: string
+  pageTitle: string
 }
-const SEO: React.FC<Props> = ({ description, lang, meta, pageTitle }) => {
+const SEO: React.FC<SEOProps> = ({ description, lang, meta, pageTitle }) => {
   const { site } = useStaticQuery<GatsbyTypes.SiteQuery>(pageQuery)
-  pageTitle = pageTitle ?? "untitled"
 
   const metaDescription =
     (description || site?.siteMetadata?.description) ?? "no description"

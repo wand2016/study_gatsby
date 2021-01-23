@@ -2,7 +2,6 @@ import React from "react"
 import { graphql } from "gatsby"
 import Posts from "@/components/posts"
 import Layout from "@/components/layout"
-import SEO from "@/components/seo"
 import moment from "moment"
 
 type Props = {
@@ -20,8 +19,7 @@ const DateFilteredPostsIndex: React.FC<Props> = ({ data, pageContext }) => {
   const pageTitle = `posts during ${period}`
 
   return (
-    <Layout>
-      <SEO pageTitle={pageTitle} />
+    <Layout pageTitle={pageTitle}>
       {pageTitle}
       <Posts posts={posts} />
     </Layout>

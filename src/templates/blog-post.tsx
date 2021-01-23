@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import { graphql, navigate } from "gatsby"
 import Layout from "@/components/layout"
-import SEO from "@/components/seo"
 import Post from "@/components/post"
 import Share from "@/components/share"
 import Toc from "@/components/toc"
@@ -21,11 +20,11 @@ const BlogPostTemplate: React.FC<Props> = ({ className, data, location }) => {
   const [tocVisibility, setTocVisibility] = useState(false)
 
   return (
-    <Layout className={className}>
-      <SEO
-        pageTitle={post?.frontmatter?.title}
-        description={post?.excerpt ?? "no description"}
-      />
+    <Layout
+      className={className}
+      pageTitle={post?.frontmatter?.title ?? "untitled"}
+      seoProps={{ description: post?.excerpt ?? "no description" }}
+    >
       {date ? <DatetimeBreadCrumb date={date} /> : null}
 
       <Post post={post} />

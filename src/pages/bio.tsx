@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react"
 import { graphql } from "gatsby"
 import GatsbyImage from "gatsby-image"
 import Layout from "@/components/layout"
-import SEO from "@/components/seo"
 import { DataTable } from "primereact/datatable"
 import { isJust } from "@/utils/assertions"
 import { Column } from "primereact/column"
@@ -54,8 +53,7 @@ const Bio: React.FC<Props> = ({ data }) => {
   }, [])
 
   return (
-    <Layout>
-      <SEO pageTitle="bio" />
+    <Layout pageTitle="bio">
       <article>
         <section>
           <h3>About Me</h3>

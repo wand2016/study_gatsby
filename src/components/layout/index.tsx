@@ -6,13 +6,23 @@ import "primeicons/primeicons.css"
 import "primeflex/primeflex.css"
 import "primereact/resources/themes/saga-blue/theme.css"
 import "primereact/resources/primereact.min.css"
+import SEO, { SEOProps } from "@/components/seo"
 
 type Props = {
   className?: string
+  pageTitle: SEOProps["pageTitle"]
+  seoProps?: Omit<SEOProps, "pageTitle">
 }
-const Layout: React.FC<Props> = ({ className, children }) => {
+const Layout: React.FC<Props> = ({
+  className,
+  pageTitle,
+  seoProps,
+  children,
+}) => {
+  const mergedSeoProps: SEOProps = { pageTitle, ...seoProps }
   return (
     <div className={className}>
+      <SEO {...mergedSeoProps} />
       <GlobalHeader className="global-header" />
       <main>{children}</main>
     </div>

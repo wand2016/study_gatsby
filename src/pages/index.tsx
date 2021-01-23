@@ -13,8 +13,7 @@ const PostsIndex: React.FC<Props> = ({ data, pageContext, location }) => {
   const posts = data?.allMarkdownRemark?.nodes
 
   return (
-    <Layout>
-      <SEO pageTitle="最新記事" />
+    <Layout pageTitle="最新記事">
       <Posts posts={posts} />
     </Layout>
   )
