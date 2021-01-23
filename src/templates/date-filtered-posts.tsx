@@ -30,11 +30,6 @@ export default DateFilteredPostsIndex
 
 export const pageQuery = graphql`
   query DateFilteredPosts($periodStart: Date!, $periodEnd: Date!) {
-    site {
-      siteMetadata {
-        title
-      }
-    }
     allMarkdownRemark(
       sort: { fields: [frontmatter___date], order: DESC }
       filter: { frontmatter: { date: { gte: $periodStart, lte: $periodEnd } } }

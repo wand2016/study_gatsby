@@ -24,11 +24,6 @@ export default TaggedPostsIndex
 
 export const pageQuery = graphql`
   query TaggedPosts($tag: String) {
-    site {
-      siteMetadata {
-        title
-      }
-    }
     allMarkdownRemark(
       sort: { fields: [frontmatter___date], order: DESC }
       filter: { frontmatter: { tags: { in: [$tag] } } }
