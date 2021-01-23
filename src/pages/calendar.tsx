@@ -7,7 +7,6 @@ import moment from "moment"
 import styled from "styled-components"
 import ReactTooltip from "react-tooltip"
 import { isJust } from "@/utils/assertions"
-import { Panel } from "primereact/panel"
 
 type CalenderHeatmapDatum = {
   date: string
@@ -47,42 +46,44 @@ const PostsIndex: React.FC<Props> = ({ className, data }) => {
 
   return (
     <Layout className={className} pageTitle="日付別記事">
-      <Panel
-        header={() => (
-          <>
+      <article>
+        <section>
+          <h3>
             <span className="pi pi-fw pi-calendar p-mr-1" />
             日付別記事
-          </>
-        )}
-      >
-        SP用のUIは検討中...
-        <div className="outer">
-          <div className="inner">
-            <CalendarHeatmap
-              startDate={startDate}
-              values={calenderHeatmapData}
-              classForValue={value =>
-                value ? `color-scale-${value.count}` : "color-empty"
-              }
-              onClick={async (e: CalenderHeatmapDatum | null) => {
-                if (!e) {
-                  return
+          </h3>
+          SP用のUIは検討中...
+          <div className="outer">
+            <div className="inner">
+              <CalendarHeatmap
+                startDate={startDate}
+                values={calenderHeatmapData}
+                classForValue={value =>
+                  value ? `color-scale-${value.count}` : "color-empty"
                 }
-                await navigate(`/time/${moment(e.date).format("YYYY/MM/DD")}`)
-              }}
-              tooltipDataAttrs={(e: CalenderHeatmapDatum) => ({
-                "data-tip": tipDictionary[e.date] ?? "",
-              })}
-            />
+                onClick={async (e: CalenderHeatmapDatum | null) => {
+                  if (!e) {
+                    return
+                  }
+                  await navigate(`/time/${moment(e.date).format("YYYY/MM/DD")}`)
+                }}
+                tooltipDataAttrs={(e: CalenderHeatmapDatum) => ({
+                  "data-tip": tipDictionary[e.date] ?? "",
+                })}
+              />
+            </div>
           </div>
-        </div>
-        <ReactTooltip multiline={true} />
-      </Panel>
+          <ReactTooltip multiline={true} />
+        </section>
+      </article>
     </Layout>
   )
 }
 
 export default styled(PostsIndex)`
+  .react-calendar-heatmap .color-empty {
+    fill: var(--surface-d);
+  }
   .react-calendar-heatmap .color-scale-1 {
     fill: #d6e685;
   }

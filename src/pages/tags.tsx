@@ -2,7 +2,6 @@ import React from "react"
 import { graphql, Link } from "gatsby"
 import Layout from "@/components/layout"
 import { isJust } from "@/utils/assertions"
-import { Panel } from "primereact/panel"
 import { Tag } from "primereact/tag"
 
 type Props = {
@@ -37,39 +36,38 @@ const NotFoundPage: React.FC<Props> = ({ data }) => {
 
   return (
     <Layout pageTitle="タグ別記事">
-      <Panel
-        header={() => (
-          <>
+      <article>
+        <section>
+          <h3>
             <span className="pi pi-fw pi-tags p-mr-1" />
             タグ一覧
-          </>
-        )}
-      >
-        <div>
-          {Object.entries(index).map(([key, tags]) => {
-            return (
-              <section>
-                <h4>{key}</h4>
-                <div style={{ lineHeight: 2 }}>
-                  {tags.map((tag, i) => (
-                    <Link
-                      key={i}
-                      to={`/tags/${tag}`}
-                      style={{ textDecoration: "none" }}
-                    >
-                      <Tag
-                        rounded
-                        className="p-mr-1"
-                        value={`${tag} (${tagCounts[tag]})`}
-                      />
-                    </Link>
-                  ))}
-                </div>
-              </section>
-            )
-          })}
-        </div>
-      </Panel>
+          </h3>
+          <div>
+            {Object.entries(index).map(([key, tags]) => {
+              return (
+                <section>
+                  <h4>{key}</h4>
+                  <div style={{ lineHeight: 2 }}>
+                    {tags.map((tag, i) => (
+                      <Link
+                        key={i}
+                        to={`/tags/${tag}`}
+                        style={{ textDecoration: "none" }}
+                      >
+                        <Tag
+                          rounded
+                          className="p-mr-1"
+                          value={`${tag} (${tagCounts[tag]})`}
+                        />
+                      </Link>
+                    ))}
+                  </div>
+                </section>
+              )
+            })}
+          </div>
+        </section>
+      </article>
     </Layout>
   )
 }

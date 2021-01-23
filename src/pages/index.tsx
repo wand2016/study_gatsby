@@ -2,7 +2,6 @@ import React from "react"
 import { graphql } from "gatsby"
 import Posts from "@/components/posts"
 import Layout from "@/components/layout"
-import { Panel } from "primereact/panel"
 
 type Props = {
   data: GatsbyTypes.LatestQuery
@@ -12,16 +11,15 @@ const PostsIndex: React.FC<Props> = ({ data }) => {
   const pageTitle = "最新記事"
   return (
     <Layout pageTitle={pageTitle}>
-      <Panel
-        header={() => (
-          <>
+      <article>
+        <section>
+          <h3>
             <span className="pi pi-fw pi-home p-mr-1" />
             {pageTitle}
-          </>
-        )}
-      >
-        <Posts posts={posts} />
-      </Panel>
+          </h3>
+          <Posts posts={posts} />
+        </section>
+      </article>
     </Layout>
   )
 }

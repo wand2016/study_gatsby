@@ -2,7 +2,6 @@ import React from "react"
 import { graphql } from "gatsby"
 import Posts from "@/components/posts"
 import Layout from "@/components/layout"
-import { Panel } from "primereact/panel"
 
 type Props = {
   data: GatsbyTypes.TaggedPostsQuery
@@ -15,16 +14,15 @@ const TaggedPostsIndex: React.FC<Props> = ({ data, pageContext }) => {
 
   return (
     <Layout pageTitle={pageTitle}>
-      <Panel
-        header={() => (
-          <>
+      <article>
+        <section>
+          <h3>
             <span className="pi pi-fw pi-tag p-mr-1" />
             {pageTitle}
-          </>
-        )}
-      >
-        <Posts posts={posts} />
-      </Panel>
+          </h3>
+          <Posts posts={posts} />
+        </section>
+      </article>
     </Layout>
   )
 }
