@@ -18,12 +18,12 @@ const DateFilteredPostsIndex: React.FC<Props> = ({ data, pageContext }) => {
   const period = `${periodStart.format("YYYY/MM/DD")} - ${periodEnd.format(
     "YYYY/MM/DD"
   )}`
-  const seoTitle = `posts during ${period}`
+  const pageTitle = `posts during ${period}`
 
   return (
-      <SEO title={seoTitle} />
-      {seoTitle}
     <Layout title={siteTitle}>
+      <SEO pageTitle={pageTitle} />
+      {pageTitle}
       <Posts posts={posts} />
     </Layout>
   )

@@ -8,11 +8,11 @@ type Props = {
   description?: string
   lang?: string
   meta?: MetaProps[]
-  title?: string
+  pageTitle?: string
 }
-
-const SEO: React.FC<Props> = ({ description, lang, meta, title }) => {
+const SEO: React.FC<Props> = ({ description, lang, meta, pageTitle }) => {
   const { site } = useStaticQuery<GatsbyTypes.SiteQuery>(pageQuery)
+  pageTitle = pageTitle ?? "untitled"
 
   const metaDescription =
     (description || site?.siteMetadata?.description) ?? "no description"
@@ -24,7 +24,7 @@ const SEO: React.FC<Props> = ({ description, lang, meta, title }) => {
     },
     {
       property: `og:title`,
-      content: title,
+      content: pageTitle,
     },
     {
       property: `og:description`,
@@ -44,7 +44,7 @@ const SEO: React.FC<Props> = ({ description, lang, meta, title }) => {
     },
     {
       name: `twitter:title`,
-      content: title,
+      content: pageTitle,
     },
     {
       name: `twitter:description`,
@@ -57,7 +57,7 @@ const SEO: React.FC<Props> = ({ description, lang, meta, title }) => {
       htmlAttributes={{
         lang,
       }}
-      title={title}
+      title={pageTitle}
       titleTemplate={`%s | ${defaultTitle}`}
       meta={defaultMeta.concat(meta || [])}
     />
@@ -74,7 +74,7 @@ SEO.propTypes = {
   description: PropTypes.string,
   lang: PropTypes.string,
   meta: PropTypes.arrayOf(PropTypes.object.isRequired),
-  title: PropTypes.string.isRequired,
+  pageTitle: PropTypes.string.isRequired,
 }
 
 export default SEO

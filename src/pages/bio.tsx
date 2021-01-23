@@ -56,7 +56,7 @@ const Bio: React.FC<Props> = ({ data }) => {
 
   return (
     <Layout title={siteTitle}>
-      <SEO title="bio" />
+      <SEO pageTitle="bio" />
       <article>
         <section>
           <h3>About Me</h3>

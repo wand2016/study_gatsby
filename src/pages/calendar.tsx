@@ -24,7 +24,6 @@ type Props = {
 const PostsIndex: React.FC<Props> = ({ className, data, location }) => {
   const siteTitle = data?.site?.siteMetadata?.title ?? `no siteTitle`
   const posts = data?.allMarkdownRemark?.nodes
-  const seoTitle = `カレンダー`
 
   const calenderHeatmapDictionary: Record<string, number> = {}
   const postTitlesDictionary: Record<string, string[]> = {}
@@ -50,7 +49,7 @@ const PostsIndex: React.FC<Props> = ({ className, data, location }) => {
 
   return (
     <Layout className={className} title={siteTitle}>
-      <SEO title={seoTitle} />
+      <SEO pageTitle="日付別記事" />
       SP用のUIは検討中...
       <div className="outer">
         <div className="inner">

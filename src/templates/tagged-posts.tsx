@@ -12,12 +12,12 @@ const TaggedPostsIndex: React.FC<Props> = ({ data, pageContext }) => {
   const tag = pageContext.tag ?? "no tag"
   const siteTitle = data?.site?.siteMetadata?.title ?? `no siteTitle`
   const posts = data?.allMarkdownRemark?.nodes
-  const seoTitle = `searched by tag ${tag}`
+  const pageTitle = `searched by tag ${tag}`
 
   return (
-      <SEO title={seoTitle} />
-      {`Searched by tag "${tag}"`}
     <Layout title={siteTitle}>
+      <SEO pageTitle={pageTitle} />
+      {pageTitle}
       <Posts posts={posts} />
     </Layout>
   )

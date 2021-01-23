@@ -24,7 +24,7 @@ const NotFoundPage: React.FC<Props> = ({ data, location }) => {
 
   return (
     <Layout title={siteTitle}>
-      <SEO title="タグ別記事" />
+      <SEO pageTitle="タグ別記事" />
       <h1>タグ一覧</h1>
       <ul>
         {tags.map((tag, i) => (

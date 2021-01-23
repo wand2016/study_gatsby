@@ -24,7 +24,7 @@ const BlogPostTemplate: React.FC<Props> = ({ className, data, location }) => {
   return (
     <Layout className={className} title={siteTitle}>
       <SEO
-        title={post?.frontmatter?.title ?? "no title"}
+        pageTitle={post?.frontmatter?.title}
         description={post?.excerpt ?? "no description"}
       />
       {date ? <DatetimeBreadCrumb date={date} /> : null}
