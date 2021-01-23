@@ -4,9 +4,8 @@ import Layout from "@/components/layout"
 import SEO from "@/components/seo"
 import Post from "@/components/post"
 import Share from "@/components/share"
+import Toc from "@/components/toc"
 import DatetimeBreadCrumb from "@/components/datetime-bread-crumb"
-import { Sidebar } from "primereact/sidebar"
-import { Button } from "primereact/button"
 
 type Props = {
   className?: string
@@ -18,6 +17,7 @@ const BlogPostTemplate: React.FC<Props> = ({ className, data, location }) => {
   const post = data?.markdownRemark
   const siteTitle = data?.site?.siteMetadata?.title || `Title`
   const date = post?.frontmatter?.date
+  const tocContent = post?.tableOfContents
 
   const [tocVisibility, setTocVisibility] = useState(false)
 
@@ -33,26 +33,13 @@ const BlogPostTemplate: React.FC<Props> = ({ className, data, location }) => {
       <hr />
       <Share post={post} location={location} />
 
-      {post?.tableOfContents ? (
-        <>
-          <Button
-            icon="pi pi-list"
-            onClick={() => setTocVisibility(true)}
-            label="目次"
-          />
-          <Sidebar
-            visible={tocVisibility}
-            onHide={() => setTocVisibility(false)}
-            position="right"
-            blockScroll={true}
-            style={{ overflowY: "scroll" }}
-          >
-            <section className="toc" key={Date()}>
-              <header>目次</header>
-              <p dangerouslySetInnerHTML={{ __html: post?.tableOfContents }} />
-            </section>
-          </Sidebar>
-        </>
+      {tocContent ? (
+        <Toc
+          content={tocContent}
+          visibility={tocVisibility}
+          onShow={() => setTocVisibility(true)}
+          onHide={() => setTocVisibility(false)}
+        />
       ) : null}
     </Layout>
   )
