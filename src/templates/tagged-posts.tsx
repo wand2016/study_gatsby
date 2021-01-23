@@ -7,18 +7,17 @@ import SEO from "@/components/seo"
 type Props = {
   data: GatsbyTypes.TaggedPostsQuery
   pageContext: GatsbyTypes.SitePageContext
-  location: Location
 }
-const TaggedPostsIndex: React.FC<Props> = ({ data, pageContext, location }) => {
+const TaggedPostsIndex: React.FC<Props> = ({ data, pageContext }) => {
   const tag = pageContext.tag ?? "no tag"
   const siteTitle = data?.site?.siteMetadata?.title ?? `no siteTitle`
   const posts = data?.allMarkdownRemark?.nodes
   const seoTitle = `searched by tag ${tag}`
 
   return (
-    <Layout location={location} title={siteTitle}>
       <SEO title={seoTitle} />
       {`Searched by tag "${tag}"`}
+    <Layout title={siteTitle}>
       <Posts posts={posts} />
     </Layout>
   )

@@ -49,7 +49,7 @@ const PostsIndex: React.FC<Props> = ({ className, data, location }) => {
   const startDate = new Date(dates[0])
 
   return (
-    <Layout className={className} location={location} title={siteTitle}>
+    <Layout className={className} title={siteTitle}>
       <SEO title={seoTitle} />
       SP用のUIは検討中...
       <div className="outer">

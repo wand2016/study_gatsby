@@ -22,7 +22,7 @@ const BlogPostTemplate: React.FC<Props> = ({ className, data, location }) => {
   const [tocVisibility, setTocVisibility] = useState(false)
 
   return (
-    <Layout className={className} location={location} title={siteTitle}>
+    <Layout className={className} title={siteTitle}>
       <SEO
         title={post?.frontmatter?.title ?? "no title"}
         description={post?.excerpt ?? "no description"}

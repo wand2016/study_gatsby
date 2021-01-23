@@ -23,7 +23,7 @@ const NotFoundPage: React.FC<Props> = ({ data, location }) => {
   const tags = Object.keys(tagCounts).sort()
 
   return (
-    <Layout location={location} title={siteTitle}>
+    <Layout title={siteTitle}>
       <SEO title="タグ別記事" />
       <h1>タグ一覧</h1>
       <ul>

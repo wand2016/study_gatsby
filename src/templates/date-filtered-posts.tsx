@@ -8,13 +8,8 @@ import moment from "moment"
 type Props = {
   data: GatsbyTypes.DateFilteredPostsQuery
   pageContext: GatsbyTypes.SitePageContext
-  location: Location
 }
-const DateFilteredPostsIndex: React.FC<Props> = ({
-  data,
-  pageContext,
-  location,
-}) => {
+const DateFilteredPostsIndex: React.FC<Props> = ({ data, pageContext }) => {
   const siteTitle = data?.site?.siteMetadata?.title ?? `no siteTitle`
   const posts = data?.allMarkdownRemark?.nodes
   const periodStart = moment(pageContext.periodStart)
@@ -26,9 +21,9 @@ const DateFilteredPostsIndex: React.FC<Props> = ({
   const seoTitle = `posts during ${period}`
 
   return (
-    <Layout location={location} title={siteTitle}>
       <SEO title={seoTitle} />
       {seoTitle}
+    <Layout title={siteTitle}>
       <Posts posts={posts} />
     </Layout>
   )

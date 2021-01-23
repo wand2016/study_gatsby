@@ -10,10 +10,9 @@ import "primereact/resources/primereact.min.css"
 
 type Props = {
   className?: string
-  location: Location
   title: string
 }
-const Layout: React.FC<Props> = ({ className, location, title, children }) => {
+const Layout: React.FC<Props> = ({ className, title, children }) => {
   return (
     <div className={className}>
       <GlobalHeader className="global-header" title={title} />

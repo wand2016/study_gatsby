@@ -15,7 +15,7 @@ const PostsIndex: React.FC<Props> = ({ data, pageContext, location }) => {
   const seoTitle = `最新記事`
 
   return (
-    <Layout location={location} title={siteTitle}>
+    <Layout title={siteTitle}>
       <SEO title={seoTitle} />
       <Posts posts={posts} />
     </Layout>
