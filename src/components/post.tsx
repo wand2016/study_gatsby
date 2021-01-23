@@ -4,11 +4,10 @@ import { isJust } from "@/utils/assertions"
 
 type Post = GatsbyTypes.BlogPostBySlugQuery["markdownRemark"]
 type Props = {
-  className?: string
   post: Post
 }
 
-const Post: React.FC<Props> = ({ className, post }) => {
+const Post: React.FC<Props> = ({ post }) => {
   const tags = (post?.frontmatter?.tags ?? []).filter(isJust)
 
   const bibliographies = post?.frontmatter?.bibliography
