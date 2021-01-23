@@ -95,7 +95,12 @@ const Bio: React.FC<Props> = ({ data }) => {
         </section>
         <section>
           <h3>保有資格</h3>
-          <DataTable value={certifications} sortField={"since"} sortOrder={-1}>
+          <DataTable
+            value={certifications}
+            sortField={"since"}
+            sortOrder={-1}
+            dataKey={"name"}
+          >
             <Column field="name" header="資格名" sortable />
             <Column field="since" header="取得日" sortable />
             <Column field="until" header="失効日" sortable />
