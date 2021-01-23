@@ -26,21 +26,28 @@ const Layout: React.FC<Props> = ({
   }
   return (
     <div className={className}>
-      <SEO {...mergedSeoProps} />
-      <GlobalHeader className="global-header" />
-      <main>{children}</main>
+      <div className="wrapper">
+        <SEO {...mergedSeoProps} />
+        <GlobalHeader className="global-header" />
+        <main>{children}</main>
+      </div>
     </div>
   )
 }
 
 export default styled(Layout)`
-  margin: 0 auto;
-  max-width: 960px;
+  background-color: var(--surface-f);
 
-  main {
-    border-left: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-    padding: 1rem;
+  .wrapper {
+    background-color: var(--surface-b);
+    margin: 0 auto;
+    max-width: 960px;
+
+    main {
+      border-left: 1px solid var(--surface-d);
+      border-right: 1px solid var(--surface-d);
+      border-bottom: 1px solid var(--surface-d);
+      padding: 1rem;
+    }
   }
 `

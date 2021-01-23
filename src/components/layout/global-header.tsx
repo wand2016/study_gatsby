@@ -82,8 +82,8 @@ const GlobalHeader: React.FC<Props> = ({ className }) => {
 
 export default styled(GlobalHeader)`
   .main-heading {
-    background-color: #333;
-    color: #eee;
+    background-color: var(--primary-color);
+    color: var(--primary-color-text);
     text-align: center;
     margin: 0;
     align-items: center;

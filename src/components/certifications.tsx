@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { DataTable } from "primereact/datatable"
 import { Column } from "primereact/column"
+import styled from "styled-components"
 
 type CertificationProp = {
   name?: string
@@ -10,9 +11,10 @@ type CertificationProp = {
 }
 type PropsType = {
   certifications: CertificationProp[]
+  className?: string
 }
 
-const Certifications: React.FC<PropsType> = ({ certifications }) => {
+const Certifications: React.FC<PropsType> = ({ certifications, className }) => {
   type BadgeInnerHTMLs = Record<string, string | undefined>
   const [badgeInnerHTMLs, setBadgeInnerHTMLs] = useState<BadgeInnerHTMLs>({})
 
@@ -40,7 +42,7 @@ const Certifications: React.FC<PropsType> = ({ certifications }) => {
   }, [])
 
   return (
-    <>
+    <div className={className}>
       <DataTable
         value={certifications}
         sortField={"since"}
@@ -55,6 +57,7 @@ const Certifications: React.FC<PropsType> = ({ certifications }) => {
           header="バッジ"
           body={(data: CertificationProp) => (
             <div
+              className="badge-replaced"
               dangerouslySetInnerHTML={{
                 __html: badgeInnerHTMLs[data.name ?? ""] ?? "",
               }}
@@ -76,8 +79,14 @@ const Certifications: React.FC<PropsType> = ({ certifications }) => {
           ))
         }
       </aside>
-    </>
+    </div>
   )
 }
 
-export default Certifications
+export default styled(Certifications)`
+  .badge-replaced {
+    iframe {
+      background-color: white;
+    }
+  }
+`
