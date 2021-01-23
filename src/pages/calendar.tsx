@@ -47,7 +47,14 @@ const PostsIndex: React.FC<Props> = ({ className, data }) => {
 
   return (
     <Layout className={className} pageTitle="日付別記事">
-      <Panel header="日付別記事">
+      <Panel
+        header={() => (
+          <>
+            <span className="pi pi-fw pi-calendar p-mr-1" />
+            日付別記事
+          </>
+        )}
+      >
         SP用のUIは検討中...
         <div className="outer">
           <div className="inner">

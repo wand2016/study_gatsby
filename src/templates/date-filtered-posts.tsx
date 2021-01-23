@@ -21,7 +21,14 @@ const DateFilteredPostsIndex: React.FC<Props> = ({ data, pageContext }) => {
 
   return (
     <Layout pageTitle={pageTitle}>
-      <Panel header={pageTitle}>
+      <Panel
+        header={() => (
+          <>
+            <span className="pi pi-fw pi-calendar p-mr-1" />
+            {pageTitle}
+          </>
+        )}
+      >
         <Posts posts={posts} />
       </Panel>
     </Layout>

@@ -12,7 +12,14 @@ const PostsIndex: React.FC<Props> = ({ data }) => {
   const pageTitle = "最新記事"
   return (
     <Layout pageTitle={pageTitle}>
-      <Panel header={pageTitle}>
+      <Panel
+        header={() => (
+          <>
+            <span className="pi pi-fw pi-home p-mr-1" />
+            {pageTitle}
+          </>
+        )}
+      >
         <Posts posts={posts} />
       </Panel>
     </Layout>

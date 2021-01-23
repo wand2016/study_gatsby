@@ -41,7 +41,7 @@ const GlobalHeader: React.FC<Props> = ({ className }) => {
     {
       path: "/calendar",
       label: "日付別記事",
-      icon: "pi pi-fw pi-calendar-times",
+      icon: "pi pi-fw pi-calendar",
     },
     {
       path: "/tags",

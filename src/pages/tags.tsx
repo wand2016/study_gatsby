@@ -21,7 +21,14 @@ const NotFoundPage: React.FC<Props> = ({ data }) => {
 
   return (
     <Layout pageTitle="タグ別記事">
-      <Panel header="タグ一覧">
+      <Panel
+        header={() => (
+          <>
+            <span className="pi pi-fw pi-tags p-mr-1" />
+            タグ一覧
+          </>
+        )}
+      >
         <ul>
           {tags.map((tag, i) => (
             <li key={i}>
