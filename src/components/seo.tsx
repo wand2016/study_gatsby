@@ -8,7 +8,7 @@ type Props = {
   description?: string
   lang?: string
   meta?: MetaProps[]
-  title: string
+  title?: string
 }
 
 const SEO: React.FC<Props> = ({ description, lang, meta, title }) => {
