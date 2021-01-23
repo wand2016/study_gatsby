@@ -40,14 +40,19 @@ const GlobalHeader: React.FC<Props> = ({ className, title }) => {
       label: "タグ別記事",
       icon: "pi pi-fw pi-tags",
     },
+    {
+      path: "/bio",
+      label: "bio",
+      icon: "pi pi-fw pi-user",
+    },
   ]
 
   const items: MenuItem[] = pathAndLabels.map(
     (pathAndLabel): MenuItem => {
       return {
         label: pathAndLabel.label,
-        command(e: { originalEvent: Event; item: MenuItem }) {
-          navigate(pathAndLabel.path)
+        async command(e: { originalEvent: Event; item: MenuItem }) {
+          await navigate(pathAndLabel.path)
         },
         icon: pathAndLabel.icon,
       }
