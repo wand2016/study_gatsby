@@ -1,5 +1,4 @@
 import React from "react"
-import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
@@ -10,7 +9,12 @@ export type SEOProps = {
   meta?: MetaProps[]
   pageTitle: string
 }
-const SEO: React.FC<SEOProps> = ({ description, lang, meta, pageTitle }) => {
+const SEO: React.FC<SEOProps> = ({
+  description,
+  lang = "ja",
+  meta = [],
+  pageTitle,
+}) => {
   const { site } = useStaticQuery<GatsbyTypes.SiteQuery>(pageQuery)
 
   const metaDescription =
@@ -61,19 +65,6 @@ const SEO: React.FC<SEOProps> = ({ description, lang, meta, pageTitle }) => {
       meta={defaultMeta.concat(meta || [])}
     />
   )
-}
-
-SEO.defaultProps = {
-  lang: `en`,
-  meta: [],
-  description: ``,
-}
-
-SEO.propTypes = {
-  description: PropTypes.string,
-  lang: PropTypes.string,
-  meta: PropTypes.arrayOf(PropTypes.object.isRequired),
-  pageTitle: PropTypes.string.isRequired,
 }
 
 export default SEO
