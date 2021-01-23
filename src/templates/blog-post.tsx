@@ -4,70 +4,20 @@ import Layout from "@/components/layout"
 import SEO from "@/components/seo"
 import Post from "@/components/post"
 import Share from "@/components/share"
-import moment from "moment"
-import { BreadCrumb } from "primereact/breadcrumb"
-import { MenuItem } from "primereact/api"
+import DatetimeBreadCrumb from "@/components/datetime-bread-crumb"
 import { Sidebar } from "primereact/sidebar"
 import { Button } from "primereact/button"
 
 type Props = {
   className?: string
   data: GatsbyTypes.BlogPostBySlugQuery
-  pageContext: GatsbyTypes.SitePageContext
   location: Location
 }
 
-const DatetimeBreadCrumb: React.FC<{ date: string | undefined }> = ({
-  date,
-}) => {
-  const dateLocal = date ? moment(date).local() : undefined
-
-  const year = dateLocal?.format("YYYY") ?? ""
-  const month = dateLocal?.format("MM") ?? ""
-  const day = dateLocal?.format("DD") ?? ""
-  const time = dateLocal?.format("HH:mm:SS") ?? ""
-
-  const breadcrumbItems: MenuItem[] = [
-    {
-      label: year,
-      async command(e: { originalEvent: Event; item: MenuItem }) {
-        await navigate(`/time/${year}/`)
-      },
-    },
-    {
-      label: month,
-      async command(e: { originalEvent: Event; item: MenuItem }) {
-        await navigate(`/time/${year}/${month}/`)
-      },
-    },
-    {
-      label: day,
-      async command(e: { originalEvent: Event; item: MenuItem }) {
-        await navigate(`/time/${year}/${month}/${day}/`)
-      },
-    },
-    {
-      label: time,
-    },
-  ]
-
-  const home: MenuItem = {
-    icon: "pi pi-calendar",
-    async command(e: { originalEvent: Event; item: MenuItem }) {
-      await navigate("/calendar")
-    },
-  }
-  return <BreadCrumb model={breadcrumbItems} home={home} />
-}
-
-const BlogPostTemplate: React.FC<Props> = ({
-  className,
-  data,
-  pageContext,
-  location,
-}) => {
+const BlogPostTemplate: React.FC<Props> = ({ className, data, location }) => {
   const post = data?.markdownRemark
   const siteTitle = data?.site?.siteMetadata?.title || `Title`
+  const date = post?.frontmatter?.date
 
   const [tocVisibility, setTocVisibility] = useState(false)
 
@@ -77,7 +27,7 @@ const BlogPostTemplate: React.FC<Props> = ({
         title={post?.frontmatter?.title ?? "no title"}
         description={post?.excerpt ?? "no description"}
       />
-      <DatetimeBreadCrumb date={post?.frontmatter?.date} />
+      {date ? <DatetimeBreadCrumb date={date} /> : null}
 
       <Post post={post} />
       <hr />
