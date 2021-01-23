@@ -28,7 +28,6 @@ const BlogPostTemplate: React.FC<Props> = ({ className, data, location }) => {
       }
     >
       <Post post={post} />
-      const [tocVisibility, setTocVisibility] = useState(false)
       {post.tableOfContents ? (
         <Toc
           content={post.tableOfContents}

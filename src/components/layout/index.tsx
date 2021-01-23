@@ -32,7 +32,7 @@ const Layout: React.FC<Props> = ({
         <SEO {...mergedSeoProps} />
         <GlobalHeader className="global-header" />
         <main className="p-p-3">{children}</main>
-        {footer ? <footer>{footer}</footer> : null}
+        {footer ? <footer className="p-p-3">{footer}</footer> : null}
       </div>
     </div>
   )

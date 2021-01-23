@@ -30,7 +30,7 @@ const Post: React.FC<Props> = ({ className, post }) => {
         itemScope
         itemType="http://schema.org/Article"
       >
-        <section className="p-p-3">
+        <section className="p-p-2">
           <h1 itemProp="headline">{post.frontmatter?.title}</h1>
           <Tags tags={tags} />
           {bibliographies.length ? (
