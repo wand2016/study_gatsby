@@ -57,53 +57,63 @@ const Bio: React.FC<Props> = ({ data }) => {
   return (
     <Layout location={location} title={siteTitle}>
       <SEO title="bio" />
-      <h1>bio</h1>
       <article>
-        {avatar && (
-          <GatsbyImage
-            fixed={avatar}
-            alt={author?.name ?? ""}
-            className="bio-avatar"
-            imgStyle={{
-              borderRadius: `50%`,
-            }}
-          />
-        )}
-        {author?.name && (
-          <div className="bio-description">
-            {author.name}
-            <br />
-            {author?.summary ?? ""}
-          </div>
-        )}
-        <div className="bio-links">
+        <section>
+          <h3>About Me</h3>
+          {avatar && (
+            <GatsbyImage
+              fixed={avatar}
+              alt={author?.name ?? ""}
+              className="bio-avatar"
+              imgStyle={{
+                borderRadius: `50%`,
+              }}
+            />
+          )}
+          {author?.name && (
+            <div className="bio-description">
+              {author.name}
+              <br />
+              {author?.summary ?? ""}
+            </div>
+          )}
           <ul>
             <li>
-              <a href={`https://twitter.com/${social?.twitter ?? ""}`}>
+              <a
+                href={`https://twitter.com/${social?.twitter ?? ""}`}
+                target="_blank"
+              >
                 twitter
               </a>
             </li>
             <li>
-              <a href={github}>GitHub</a>
+              <a href={github} target="_blank">
+                GitHub
+              </a>
             </li>
           </ul>
-        </div>
-        <DataTable value={certifications} sortField={"since"} sortOrder={-1}>
-          <Column field="name" header="資格名" sortable />
-          <Column field="since" header="取得日" sortable />
-          <Column field="until" header="失効日" sortable />
-          <Column
-            field="embed"
-            header="バッジ"
-            body={(data: Certification) => (
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: badgeInnerHTMLs[data.name ?? ""] ?? "",
-                }}
-              />
-            )}
-          />
-        </DataTable>
+        </section>
+        <section>
+          <h3>保有資格</h3>
+          <DataTable value={certifications} sortField={"since"} sortOrder={-1}>
+            <Column field="name" header="資格名" sortable />
+            <Column field="since" header="取得日" sortable />
+            <Column field="until" header="失効日" sortable />
+            <Column
+              field="embed"
+              header="バッジ"
+              body={(data: Certification) => (
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: badgeInnerHTMLs[data.name ?? ""] ?? "",
+                  }}
+                />
+              )}
+            />
+          </DataTable>
+        </section>
+      </article>
+      <aside>
         {
           // youracclaimのスクリプトでdivタグをiframeに置換したものを保持する用
           certifications.map(cert => (
@@ -116,7 +126,7 @@ const Bio: React.FC<Props> = ({ data }) => {
             />
           ))
         }
-      </article>
+      </aside>
     </Layout>
   )
 }
