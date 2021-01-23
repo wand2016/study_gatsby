@@ -97,7 +97,6 @@ export default styled(PostsIndex)`
 
     .inner {
       height: 100%;
-      overflow: none;
       > * {
         height: 100%;
       }
