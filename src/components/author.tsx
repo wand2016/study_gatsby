@@ -32,21 +32,15 @@ const author: React.FC<PropsType> = ({ author }) => {
           {author?.summary ?? ""}
         </div>
       )}
-      <ul>
-        <li>
-          <a
-            href={`https://twitter.com/${author.social?.twitter ?? ""}`}
-            target="_blank"
-          >
-            twitter
-          </a>
-        </li>
-        <li>
-          <a href={author.github} target="_blank">
-            GitHub
-          </a>
-        </li>
-      </ul>
+      <a
+        href={`https://twitter.com/${author.social?.twitter ?? ""}`}
+        target="_blank"
+      >
+        <span className="pi pi-fw pi-twitter" />
+      </a>
+      <a href={author.github} target="_blank">
+        <span className="pi pi-fw pi-github" />
+      </a>
     </>
   )
 }
