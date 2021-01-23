@@ -2,6 +2,7 @@ import React from "react"
 import { graphql } from "gatsby"
 import Posts from "@/components/posts"
 import Layout from "@/components/layout"
+import { Panel } from "primereact/panel"
 
 type Props = {
   data: GatsbyTypes.TaggedPostsQuery
@@ -10,12 +11,13 @@ type Props = {
 const TaggedPostsIndex: React.FC<Props> = ({ data, pageContext }) => {
   const tag = pageContext.tag ?? "no tag"
   const posts = data?.allMarkdownRemark?.nodes
-  const pageTitle = `searched by tag ${tag}`
+  const pageTitle = `"${tag}" でタグ付けされた記事`
 
   return (
     <Layout pageTitle={pageTitle}>
-      {pageTitle}
-      <Posts posts={posts} />
+      <Panel header={pageTitle}>
+        <Posts posts={posts} />
+      </Panel>
     </Layout>
   )
 }

@@ -3,6 +3,7 @@ import { graphql } from "gatsby"
 import Posts from "@/components/posts"
 import Layout from "@/components/layout"
 import moment from "moment"
+import { Panel } from "primereact/panel"
 
 type Props = {
   data: GatsbyTypes.DateFilteredPostsQuery
@@ -16,12 +17,13 @@ const DateFilteredPostsIndex: React.FC<Props> = ({ data, pageContext }) => {
   const period = `${periodStart.format("YYYY/MM/DD")} - ${periodEnd.format(
     "YYYY/MM/DD"
   )}`
-  const pageTitle = `posts during ${period}`
+  const pageTitle = `${period} の記事`
 
   return (
     <Layout pageTitle={pageTitle}>
-      {pageTitle}
-      <Posts posts={posts} />
+      <Panel header={pageTitle}>
+        <Posts posts={posts} />
+      </Panel>
     </Layout>
   )
 }

@@ -2,6 +2,7 @@ import React from "react"
 import { graphql, Link } from "gatsby"
 import Layout from "@/components/layout"
 import { isJust } from "@/utils/assertions"
+import { Panel } from "primereact/panel"
 
 type Props = {
   data: GatsbyTypes.AllTagsQuery
@@ -20,16 +21,17 @@ const NotFoundPage: React.FC<Props> = ({ data }) => {
 
   return (
     <Layout pageTitle="タグ別記事">
-      <h1>タグ一覧</h1>
-      <ul>
-        {tags.map((tag, i) => (
-          <li key={i}>
-            <Link to={`/tags/${tag}`}>
-              {tag} ({tagCounts[tag]})
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <Panel header="タグ一覧">
+        <ul>
+          {tags.map((tag, i) => (
+            <li key={i}>
+              <Link to={`/tags/${tag}`}>
+                {tag} ({tagCounts[tag]})
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </Panel>
     </Layout>
   )
 }
