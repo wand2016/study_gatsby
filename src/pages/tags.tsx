@@ -3,6 +3,7 @@ import { graphql, Link } from "gatsby"
 import Layout from "@/components/layout"
 import { isJust } from "@/utils/assertions"
 import { Panel } from "primereact/panel"
+import { Tag } from "primereact/tag"
 
 type Props = {
   data: GatsbyTypes.AllTagsQuery
@@ -29,15 +30,21 @@ const NotFoundPage: React.FC<Props> = ({ data }) => {
           </>
         )}
       >
-        <ul>
+        <div style={{ lineHeight: 2 }}>
           {tags.map((tag, i) => (
-            <li key={i}>
-              <Link to={`/tags/${tag}`}>
-                {tag} ({tagCounts[tag]})
-              </Link>
-            </li>
+            <Link
+              key={i}
+              to={`/tags/${tag}`}
+              style={{ textDecoration: "none" }}
+            >
+              <Tag
+                rounded
+                className="p-mr-1"
+                value={`${tag} (${tagCounts[tag]})`}
+              />
+            </Link>
           ))}
-        </ul>
+        </div>
       </Panel>
     </Layout>
   )
