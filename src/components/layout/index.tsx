@@ -20,7 +20,10 @@ const Layout: React.FC<Props> = ({
   seoProps,
   children,
 }) => {
-  const mergedSeoProps: SEOProps = { pageTitle, ...seoProps }
+  const mergedSeoProps: SEOProps = {
+    pageTitle,
+    ...seoProps,
+  }
   return (
     <div className={className}>
       <SEO {...mergedSeoProps} />
