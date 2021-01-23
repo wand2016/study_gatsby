@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { graphql } from "gatsby"
 import GatsbyImage from "gatsby-image"
 import Layout from "@/components/layout"
@@ -6,7 +6,6 @@ import SEO from "@/components/seo"
 import { DataTable } from "primereact/datatable"
 import { isJust } from "@/utils/assertions"
 import { Column } from "primereact/column"
-import { Helmet } from "react-helmet"
 
 type Props = {
   data: GatsbyTypes.BioPageQuery
@@ -29,6 +28,13 @@ const Bio: React.FC<Props> = ({ data }) => {
   const certifications: Certification[] = (
     data?.site?.siteMetadata?.certifications ?? []
   ).filter(isJust)
+
+  useEffect(() => {
+    const script = document.createElement("script")
+    script.setAttribute("type", "text/javascript")
+    script.src = "https://www.youracclaim.com/assets/utilities/embed.js"
+    document.head.appendChild(script)
+  }, [])
 
   return (
     <Layout location={location} title={siteTitle}>
@@ -82,13 +88,6 @@ const Bio: React.FC<Props> = ({ data }) => {
           />
         </DataTable>
       </article>
-      <Helmet>
-        <script
-          type="text/javascript"
-          async
-          src="https://www.youracclaim.com/assets/utilities/embed.js"
-        ></script>
-      </Helmet>
     </Layout>
   )
 }
