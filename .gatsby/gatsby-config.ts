@@ -205,6 +205,8 @@ export default {
     {
       resolve: `gatsby-plugin-algolia`,
       options: {
+        enablePartialUpdates: true,
+        matchFields: ["title", "slug", "excerpt"],
         appId: process.env.GATSBY_ALGOLIA_APP_ID,
         apiKey: process.env.ALGOLIA_ADMIN_KEY,
         queries: queries,
