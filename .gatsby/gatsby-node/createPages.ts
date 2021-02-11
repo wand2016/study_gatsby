@@ -101,33 +101,13 @@ export const createPages: GatsbyNode["createPages"] = async ({
     const years = [...new Set(dates.map(date => date.getFullYear()))]
     // 1..12
     const months = [...Array(12).keys()].map((_, i) => i + 1)
-    // 1..31
-    const days = [...Array(31).keys()].map((_, i) => i + 1)
 
     for (const year of years) {
-      createYearPage(year, dateFilteredPosts)
       for (const month of months) {
         createMonthPage(year, month, dateFilteredPosts)
-        for (const day of days) {
-          createDayPage(year, month, day, dateFilteredPosts)
-        }
       }
     }
   })()
-
-  function createYearPage(year: number, dateFilteredPosts: string) {
-    const periodStart = moment().year(year).startOf("year").toISOString()
-    const periodEnd = moment().year(year).endOf("year").toISOString()
-
-    createPage({
-      path: `/time/${year}/`,
-      component: dateFilteredPosts,
-      context: {
-        periodStart,
-        periodEnd,
-      },
-    })
-  }
 
   function createMonthPage(
     year: number,
@@ -148,37 +128,6 @@ export const createPages: GatsbyNode["createPages"] = async ({
 
     createPage({
       path: `/time/${year}/${monthInPath}`,
-      component: dateFilteredPosts,
-      context: {
-        periodStart,
-        periodEnd,
-      },
-    })
-  }
-
-  function createDayPage(
-    year: number,
-    month: number,
-    day: number,
-    dateFilteredPosts: string
-  ) {
-    const periodStart = moment()
-      .year(year)
-      .month(month - 1)
-      .date(day)
-      .startOf("date")
-      .toISOString()
-    const periodEnd = moment()
-      .year(year)
-      .month(month - 1)
-      .date(day)
-      .endOf("date")
-      .toISOString()
-    const monthInPath = ("0" + month).slice(-2)
-    const dayInPath = ("0" + day).slice(-2)
-
-    createPage({
-      path: `/time/${year}/${monthInPath}/${dayInPath}`,
       component: dateFilteredPosts,
       context: {
         periodStart,

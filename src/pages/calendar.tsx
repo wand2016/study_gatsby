@@ -65,7 +65,7 @@ const PostsIndex: React.FC<Props> = ({ className, data }) => {
                   if (!e) {
                     return
                   }
-                  await navigate(`/time/${moment(e.date).format("YYYY/MM/DD")}`)
+                  await navigate(`/time/${moment(e.date).format("YYYY/MM")}`)
                 }}
                 tooltipDataAttrs={(e: CalenderHeatmapDatum) => ({
                   "data-tip": tipDictionary[e.date] ?? "",

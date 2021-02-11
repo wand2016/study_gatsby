@@ -18,9 +18,6 @@ const DatetimeBreadCrumb: React.FC<PropsType> = ({ date }) => {
   const breadCrumbItems: MenuItem[] = [
     {
       label: year,
-      async command(e: { originalEvent: Event; item: MenuItem }) {
-        await navigate(`/time/${year}/`)
-      },
     },
     {
       label: month,
@@ -29,13 +26,7 @@ const DatetimeBreadCrumb: React.FC<PropsType> = ({ date }) => {
       },
     },
     {
-      label: day,
-      async command(e: { originalEvent: Event; item: MenuItem }) {
-        await navigate(`/time/${year}/${month}/${day}/`)
-      },
-    },
-    {
-      label: time,
+      label: `${day} ${time}`,
     },
   ]
 
