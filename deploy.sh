@@ -2,7 +2,11 @@
 
 set -eux
 
-export LC_ALL=en_US.UTF-8
+export LANG=C.UTF-8
+export LC_CTYPE=C.UTF-8
+export PYTHONIOENCODING=utf-8
+
+locale
 
 # 手元のpublic/のMD5一覧を用意
 echo 'prepare md5 list for public/'
