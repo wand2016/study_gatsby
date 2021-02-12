@@ -8,7 +8,6 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@akud/aws-s3-sync-by-hash": "^1.0.5",
     "@styled-icons/fa-solid": "^10.23.0",
     "algoliasearch": "^4.8.3",
     "escape-string-regexp": "^4.0.0",
@@ -83,6 +82,6 @@
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
-    "deploy": "node ./deploy.js"
+    "deploy": "./deploy.sh"
   }
 }
