@@ -1,9 +1,9 @@
 name: build and deploy
 
 on:
-  # push:
-  #   branches:
-  #     - master
+  push:
+    branches:
+      - master
   repository_dispatch:
     types:
       - "study blog contents updated"
