@@ -10,7 +10,7 @@ locale
 
 # 手元のpublic/のMD5一覧を用意
 echo 'prepare md5 list for public/'
-find public/ -type f -print0 | xargs -0 md5sum | awk 'BEGIN {FS="  ";OFS=","} {print $2, $1}' | sort -k 1,1 -t ',' > md5list_new
+find public/ -type f -print0 | xargs -0 md5sum | awk 'BEGIN {FS="  ";OFS=","} {print substr($2, 8), $1}' | sort -k 1,1 -t ',' > md5list_new
 
 # s3にMD5一覧を取りにいく。なければ空
 echo 'fetch or touch md5 list for remote/'
