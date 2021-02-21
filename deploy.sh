@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -eux
+set -eu
 
 export LANG=C.UTF-8
 export LC_CTYPE=C.UTF-8
