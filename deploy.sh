@@ -36,12 +36,12 @@ else
     includes=' '
     while read line
     do
-        includes="$includes --include='$line'"
+        includes="$includes --include '$line'"
     done < paths_to_sync
     echo 'sync filtering with:'
     echo $includes
 
-    aws s3 sync public/ s3://d-horiyama-study-blog/ --exact-timestamps --delete --exclude='*' $includes
+    aws s3 sync public/ s3://d-horiyama-study-blog/ --exact-timestamps --delete --exclude '*' $includes
 fi
 
 # MD5ハッシュリストもアップロードして終了
