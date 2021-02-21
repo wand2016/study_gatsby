@@ -28,20 +28,21 @@ if [ $paths_to_sync_count -eq 0 ]; then
     echo 'noop'
 # 100個を超えていたら問答無用でsync
 # s3側のMD5一覧が空の場合もこっち
-elif [ $paths_to_sync_count -gt 100 ]; then
+# elif [ $paths_to_sync_count -gt 100 ]; then
+else
     echo 'Too many files to sync. sync all.'
     aws s3 sync public/ s3://d-horiyama-study-blog/ --exact-timestamps --delete
 # それ以下なら --include 指定
-else
-    includes=' '
-    while read line
-    do
-        includes="$includes --include '$line'"
-    done < paths_to_sync
-    echo 'sync filtering with:'
-    echo $includes
+# else
+#     includes=' '
+#     while read line
+#     do
+#         includes="$includes --include '$line'"
+#     done < paths_to_sync
+#     echo 'sync filtering with:'
+#     echo $includes
 
-    aws s3 sync public/ s3://d-horiyama-study-blog/ --exact-timestamps --delete --exclude '*' $includes
+#     aws s3 sync public/ s3://d-horiyama-study-blog/ --exact-timestamps --delete --exclude '*' $includes
 fi
 
 # MD5ハッシュリストもアップロードして終了
