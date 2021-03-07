@@ -1,25 +1,25 @@
 import React from "react"
 import { graphql } from "gatsby"
 import Posts from "@/components/posts"
-import Bio from "@/components/bio"
 import Layout from "@/components/layout"
-import SEO from "@/components/seo"
 
 type Props = {
-  data: GatsbyTypes.PageQuery
-  pageContext: GatsbyTypes.SitePageContext
-  location: Location
+  data: GatsbyTypes.LatestQuery
 }
-const PostsIndex: React.FC<Props> = ({ data, pageContext, location }) => {
-  const siteTitle = data?.site?.siteMetadata?.title ?? `no siteTitle`
-  const posts = data?.allMarkdownRemark?.nodes
-  const seoTitle = `all posts`
-
+const PostsIndex: React.FC<Props> = ({ data }) => {
+  const posts = data?.allMarkdownRemark?.nodes ?? []
+  const pageTitle = "最新記事"
   return (
-    <Layout location={location} title={siteTitle}>
-      <SEO title={seoTitle} />
-      <Bio />
-      <Posts posts={posts} />
+    <Layout pageTitle={pageTitle}>
+      <article>
+        <section>
+          <h3>
+            <span className="pi pi-fw pi-home p-mr-1" />
+            {pageTitle}
+          </h3>
+          <Posts posts={posts} />
+        </section>
+      </article>
     </Layout>
   )
 }
@@ -27,13 +27,11 @@ const PostsIndex: React.FC<Props> = ({ data, pageContext, location }) => {
 export default PostsIndex
 
 export const pageQuery = graphql`
-  query Page {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+  query Latest {
+    allMarkdownRemark(
+      limit: 10
+      sort: { fields: [frontmatter___date], order: DESC }
+    ) {
       nodes {
         fields {
           slug

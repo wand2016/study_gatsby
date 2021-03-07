@@ -1,24 +1,54 @@
-import Layout from "./layout"
 import styled from "styled-components"
+import React, { PropsWithChildren } from "react"
+import SEO, { SEOProps } from "@/components/seo"
+import GlobalHeader from "@/components/layout/global-header"
+
+type Props = {
+  className?: string
+  pageTitle: SEOProps["pageTitle"]
+  seoProps?: Omit<SEOProps, "pageTitle">
+  footer?: PropsWithChildren<any>["children"]
+}
+const Layout: React.FC<Props> = ({
+  className,
+  pageTitle,
+  seoProps,
+  children,
+  footer,
+}) => {
+  const mergedSeoProps: SEOProps = {
+    pageTitle,
+    ...seoProps,
+  }
+  return (
+    <div className={className}>
+      <div className="wrapper">
+        <SEO {...mergedSeoProps} />
+        <GlobalHeader className="global-header" />
+        <main className="p-p-3">{children}</main>
+        {footer ? <footer className="p-p-3">{footer}</footer> : null}
+      </div>
+    </div>
+  )
+}
 
 export default styled(Layout)`
-  margin: var(--spacing-0) auto;
-  max-width: var(--maxWidth-wrapper);
-  padding: var(--spacing-10) var(--spacing-5);
+  background-color: var(--surface-f);
 
-  .global-header {
-    margin-bottom: var(--spacing-12);
-  }
+  .wrapper {
+    background-color: var(--surface-b);
+    margin: 0 auto;
+    max-width: 960px;
 
-  .main-heading {
-    font-size: var(--fontSize-7);
-    margin: 0;
-  }
+    > main {
+      border: 1px solid var(--surface-d);
+    }
 
-  .header-link-home {
-    font-weight: var(--fontWeight-bold);
-    font-family: var(--font-heading);
-    text-decoration: none;
-    font-size: var(--fontSize-2);
+    > footer {
+      background-color: var(--surface-c);
+      border: 1px solid var(--surface-d);
+      position: sticky;
+      bottom: 0;
+    }
   }
 `

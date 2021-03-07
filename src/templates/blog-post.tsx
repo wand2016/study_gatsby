@@ -1,58 +1,48 @@
-import React from "react"
-import { graphql, Link } from "gatsby"
+import React, { useState } from "react"
+import { graphql } from "gatsby"
 import Layout from "@/components/layout"
-import SEO from "@/components/seo"
-import TocMenu from "@/components/toc-menu"
 import Post from "@/components/post"
-import Share from "@/components/share"
-import moment from "moment"
+import PostFooterMenu from "@/components/post-footer-menu"
+import Toc from "@/components/toc"
 
 type Props = {
+  className?: string
   data: GatsbyTypes.BlogPostBySlugQuery
-  pageContext: GatsbyTypes.SitePageContext
   location: Location
 }
 
-const BlogPostTemplate: React.FC<Props> = ({ data, pageContext, location }) => {
+const BlogPostTemplate: React.FC<Props> = ({ className, data, location }) => {
   const post = data?.markdownRemark
-  const siteTitle = data?.site?.siteMetadata?.title || `Title`
-  const date = post?.frontmatter?.date
-  const dateLocal = date ? moment(date).local() : undefined
-
-  const year = dateLocal?.format("YYYY") ?? ""
-  const month = dateLocal?.format("MM") ?? ""
-  const day = dateLocal?.format("DD") ?? ""
-  const time = dateLocal?.format("HH:mm:SS") ?? ""
-
-  return (
-    <Layout location={location} title={siteTitle}>
-      <SEO
-        title={post?.frontmatter?.title ?? "no title"}
-        description={post?.excerpt ?? "no description"}
-      />
-      <p>
-        <Link to={`/${year}/`}>{year}</Link>/
-        <Link to={`/${year}/${month}/`}>{month}</Link>/{day}
-        &nbsp;{time}
-      </p>
-
+  const [tocVisibility, setTocVisibility] = useState(false)
+  return post ? (
+    <Layout
+      className={className}
+      pageTitle={post?.frontmatter?.title ?? "untitled"}
+      seoProps={{ description: post?.excerpt ?? "no description" }}
+      footer={
+        <PostFooterMenu
+          location={location}
+          post={post}
+          onTocShown={() => setTocVisibility(true)}
+        />
+      }
+    >
       <Post post={post} />
-      <hr />
-      <Share post={post} location={location} />
-      {post?.tableOfContents && <TocMenu toc={post?.tableOfContents} />}
+      {post.tableOfContents ? (
+        <Toc
+          content={post.tableOfContents}
+          visibility={tocVisibility}
+          onHide={() => setTocVisibility(false)}
+        />
+      ) : null}
     </Layout>
-  )
+  ) : null
 }
 
 export default BlogPostTemplate
 
 export const pageQuery = graphql`
   query BlogPostBySlug($slug: String!) {
-    site {
-      siteMetadata {
-        title
-      }
-    }
     markdownRemark(fields: { slug: { eq: $slug } }) {
       id
       excerpt(pruneLength: 160)
@@ -60,13 +50,14 @@ export const pageQuery = graphql`
       tableOfContents(
         absolute: false
         pathToSlugField: "frontmatter.path"
-        maxDepth: 3
+        maxDepth: 5
       )
       frontmatter {
         title
         date
         tags
         bibliography
+        bibliographies
       }
     }
   }

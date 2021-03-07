@@ -20,7 +20,6 @@ export const createPages: GatsbyNode["createPages"] = async ({
             }
             frontmatter {
               date
-              title
               tags
             }
           }
@@ -100,30 +99,15 @@ export const createPages: GatsbyNode["createPages"] = async ({
     )
 
     const years = [...new Set(dates.map(date => date.getFullYear()))]
-    for (const year of years) {
-      createYearPage(year, dateFilteredPosts)
+    // 1..12
+    const months = [...Array(12).keys()].map((_, i) => i + 1)
 
-      // 1..12
-      const months = [...Array(12).keys()].map((_, i) => i + 1)
+    for (const year of years) {
       for (const month of months) {
         createMonthPage(year, month, dateFilteredPosts)
       }
     }
   })()
-
-  function createYearPage(year: number, dateFilteredPosts: string) {
-    const periodStart = moment().year(year).startOf("year").toISOString()
-    const periodEnd = moment().year(year).endOf("year").toISOString()
-
-    createPage({
-      path: `/${year}/`,
-      component: dateFilteredPosts,
-      context: {
-        periodStart,
-        periodEnd,
-      },
-    })
-  }
 
   function createMonthPage(
     year: number,
@@ -143,7 +127,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
     const monthInPath = ("0" + month).slice(-2)
 
     createPage({
-      path: `/${year}/${monthInPath}`,
+      path: `/time/${year}/${monthInPath}`,
       component: dateFilteredPosts,
       context: {
         periodStart,

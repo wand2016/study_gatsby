@@ -1,58 +1,69 @@
 import React from "react"
-import styled from "styled-components"
 import Tags from "@/components/tags"
 import { isJust } from "@/utils/assertions"
+import DatetimeBreadCrumb from "@/components/datetime-bread-crumb"
+import styled from "styled-components"
+import { Card } from "primereact/card"
 
-type Post = GatsbyTypes.BlogPostBySlugQuery["markdownRemark"]
+type Just<T> = T extends undefined ? never : T
+type Post = Just<GatsbyTypes.BlogPostBySlugQuery["markdownRemark"]>
 type Props = {
   className?: string
   post: Post
 }
 
 const Post: React.FC<Props> = ({ className, post }) => {
-  const tags = (post?.frontmatter?.tags ?? []).filter(isJust)
+  const tags = (post.frontmatter?.tags ?? []).filter(isJust)
+
+  const bibliographies = post.frontmatter?.bibliography
+    ? [post.frontmatter?.bibliography]
+    : post.frontmatter?.bibliographies ?? []
 
   return (
-    <article
-      className={className}
-      itemScope
-      itemType="http://schema.org/Article"
-    >
-      <header>
-        <h1 itemProp="headline">{post?.frontmatter?.title}</h1>
-      </header>
-      <Tags tags={tags} />
-      {post?.frontmatter?.bibliography && (
-        <section>
-          出典:&nbsp;
-          <a href={post?.frontmatter?.bibliography} target="_blank">
-            {post?.frontmatter?.bibliography}
-          </a>
+    <>
+      {post.frontmatter?.date ? (
+        <DatetimeBreadCrumb date={post.frontmatter?.date} />
+      ) : null}
+
+      <article
+        className={className}
+        itemScope
+        itemType="http://schema.org/Article"
+      >
+        <section className="p-p-2">
+          <h1 itemProp="headline">{post.frontmatter?.title}</h1>
+          <Tags tags={tags} />
+          {bibliographies.length ? (
+            <section>
+              <h2>出典:&nbsp;</h2>
+              <ul>
+                {bibliographies.map((bibliography, i) => (
+                  <li key={`bibliography-${i}`}>
+                    <a href={bibliography} target="_blank">
+                      {bibliography}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
         </section>
-      )}
-      <hr />
-      <section
-        dangerouslySetInnerHTML={{
-          __html: post?.html ?? "no content",
-        }}
-        itemProp="articleBody"
-      />
-    </article>
+        <Card>
+          <section
+            className="markdown-body"
+            dangerouslySetInnerHTML={{
+              __html: post.html ?? "no content",
+            }}
+            itemProp="articleBody"
+          />
+        </Card>
+      </article>
+    </>
   )
 }
 
 export default styled(Post)`
-  header h1 {
-    margin: var(--spacing-0) var(--spacing-0) var(--spacing-4) var(--spacing-0);
-  }
-
-  header p {
-    font-size: var(--fontSize-2);
-    font-family: var(--font-heading);
-  }
-
-  section > ol,
-  section > ul {
-    padding-left: 2rem;
+  .markdown-body {
+    background-color: var(--surface-a);
   }
 `

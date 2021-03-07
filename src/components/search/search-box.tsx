@@ -1,31 +1,41 @@
-import React, { FocusEventHandler } from "react"
+import React, {
+  FocusEventHandler,
+  ChangeEventHandler,
+  ChangeEvent,
+} from "react"
 import { connectSearchBox } from "react-instantsearch-dom"
-import { Search as SearchIcon } from "@styled-icons/fa-solid"
 import { SearchBoxProvided } from "react-instantsearch-core"
+import { InputText } from "primereact/inputtext"
 
 type Props = {
   className?: string
+  onChange?: ChangeEventHandler
   onFocus?: FocusEventHandler
-  hasFocus?: boolean
 } & SearchBoxProvided
 
 const form: React.FC<Props> = ({
   refine,
   currentRefinement,
   className,
+  onChange,
   onFocus,
 }) => (
   <form className={className}>
-    <input
-      className="SearchInput"
-      type="text"
-      placeholder="検索"
-      aria-label="Search"
-      onChange={e => refine(e.target.value)}
-      value={currentRefinement}
-      onFocus={onFocus}
-    />
-    <SearchIcon className="SearchIcon" />
+    <span className="p-input-icon-left">
+      <i className="pi pi-search" />
+      <InputText
+        value={currentRefinement}
+        onChange={e => {
+          refine((e.target as HTMLInputElement).value)
+          if (onChange) {
+            onChange(e as ChangeEvent<HTMLInputElement>)
+          }
+        }}
+        onFocus={onFocus}
+        placeholder="キーワード"
+        aria-label="Search"
+      />
+    </span>
   </form>
 )
 

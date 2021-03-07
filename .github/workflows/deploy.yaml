@@ -11,16 +11,42 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-16.04
+    strategy:
+      matrix:
+        python-version: [3.6]
     steps:
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-1
+      - name: Set up AWS CLI with Python 3.x
+        run: |
+            export LANG=C.UTF-8
+            pip3 install awscli --upgrade
+            aws --version
+
       - name: Checkout Gatsby Environment
         uses: actions/checkout@v2
         with:
           repository: "wand2016/study_gatsby"
+          fetch-depth: 2
       - name: Checkout Contents
         uses: actions/checkout@v2
         with:
           repository: "wand2016/study"
           path: "content/blog"
+          fetch-depth: 2
+      - name: load commit hashes
+        run: |
+            echo "HASH_HEAD=$(git rev-parse HEAD)-$(git -C content/blog rev-parse HEAD)" | tee -a $GITHUB_ENV
+            echo "HASH_PARENT=$(git rev-parse HEAD)-$(git -C content/blog rev-parse HEAD^)" | tee -a $GITHUB_ENV
       - name: cache node_modules
         id: cache-node_modules
         uses: actions/cache@v2
@@ -33,19 +59,38 @@ jobs:
         if: steps.cache-node_modules.outputs.cache-hit != 'true'
         run: npm ci
 
-      # - name: cache gatsby
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: |
-      #       .cache
-      #     key: "fixed"
-      - name: build and deploy
-        run: ./deploy.sh
+      - name: cache gatsby for HEAD
+        uses: actions/cache@v2
+        id: cache-gatsby-for_head
+        with:
+          path: |
+            .cache
+            public
+          key: ${{ env.HASH_HEAD }}
+      - name: "cache gatsby for HEAD^"
+        if: steps.cache-gatsby-for_head.outputs.cache-hit != 'true'
+        uses: actions/cache@v2
+        with:
+          path: |
+            .cache
+            public
+          key: ${{ env.HASH_PARENT }}
+
+      - name: build and put algolia indices
+        run: npm run build
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          TZ: Asia/Tokyo
           ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
           GATSBY_ALGOLIA_APP_ID: ${{ secrets.GATSBY_ALGOLIA_APP_ID }}
           GATSBY_ALGOLIA_SEARCH_KEY: ${{ secrets.GATSBY_ALGOLIA_SEARCH_KEY }}
           GATSBY_ALGOLIA_INDEX: ${{ secrets.GATSBY_ALGOLIA_INDEX }}
         timeout-minutes: 10
+
+      - name: deploy to s3
+        run: npm run deploy
+        timeout-minutes: 5
+
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}

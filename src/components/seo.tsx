@@ -1,17 +1,20 @@
 import React from "react"
-import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
 type MetaProps = JSX.IntrinsicElements["meta"]
-type Props = {
+export type SEOProps = {
   description?: string
   lang?: string
   meta?: MetaProps[]
-  title: string
+  pageTitle: string
 }
-
-const SEO: React.FC<Props> = ({ description, lang, meta, title }) => {
+const SEO: React.FC<SEOProps> = ({
+  description,
+  lang = "ja",
+  meta = [],
+  pageTitle,
+}) => {
   const { site } = useStaticQuery<GatsbyTypes.SiteQuery>(pageQuery)
 
   const metaDescription =
@@ -24,7 +27,7 @@ const SEO: React.FC<Props> = ({ description, lang, meta, title }) => {
     },
     {
       property: `og:title`,
-      content: title,
+      content: pageTitle,
     },
     {
       property: `og:description`,
@@ -44,7 +47,7 @@ const SEO: React.FC<Props> = ({ description, lang, meta, title }) => {
     },
     {
       name: `twitter:title`,
-      content: title,
+      content: pageTitle,
     },
     {
       name: `twitter:description`,
@@ -57,24 +60,11 @@ const SEO: React.FC<Props> = ({ description, lang, meta, title }) => {
       htmlAttributes={{
         lang,
       }}
-      title={title}
-      titleTemplate={defaultTitle ? `%s | ${defaultTitle}` : undefined}
+      title={pageTitle}
+      titleTemplate={`%s | ${defaultTitle}`}
       meta={defaultMeta.concat(meta || [])}
     />
   )
-}
-
-SEO.defaultProps = {
-  lang: `en`,
-  meta: [],
-  description: ``,
-}
-
-SEO.propTypes = {
-  description: PropTypes.string,
-  lang: PropTypes.string,
-  meta: PropTypes.arrayOf(PropTypes.object.isRequired),
-  title: PropTypes.string.isRequired,
 }
 
 export default SEO

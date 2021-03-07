@@ -1,30 +1,25 @@
 import React from "react"
-import PostListItem from "./post-list-item"
-import styled from "styled-components"
+import PostListItem, { PostListItemProp } from "./post-list-item"
 
 type Props = {
-  className?: string
-  posts: GatsbyTypes.PageQuery["allMarkdownRemark"]["nodes"]
+  posts: readonly PostListItemProp[]
 }
-
-const Posts: React.FC<Props> = ({ className, posts }) => {
-  if (posts.length === 0) {
-    return <p>記事がありません</p>
-  }
-
+const Posts: React.FC<Props> = ({ posts }) => {
   return (
-    <ol className={className}>
-      {posts.map(post => (
-        <PostListItem post={post} />
-      ))}
-    </ol>
+    <div className="p-grid">
+      {posts.length ? (
+        posts.map((post, i) => (
+          <PostListItem
+            key={post?.fields?.slug ?? ""}
+            post={post}
+            className="p-col-12 p-md-12 p-lg-6"
+          />
+        ))
+      ) : (
+        <p>記事がありません</p>
+      )}
+    </div>
   )
 }
 
-export default styled(Posts)`
-  list-style: none;
-
-  > li:not(:first-child) {
-    border-top: 1px solid silver;
-  }
-`
+export default Posts
